@@ -3,13 +3,23 @@ const express = require('express');
 const app = express();
 const { Pool } = require('pg');
 const { v4: uuidv4 } = require('uuid');
+// const pool = new Pool({
+//     user: 'postgres',
+//     host: 'localhost',
+//     database: 'postgres',
+//     password: 'pg12345',
+//     port: 5432
+// });
+
+//Prod 
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'postgres',
-    password: 'pg12345',
+    user: 'flores',
+    host: 'dpg-cjfaqnqnip6c739eemgg-a',
+    database: 'flores',
+    password: '2ozHMesEMGur2Fuuawl4LU2CnITcBCQx',
     port: 5432
 });
+
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
