@@ -1,0 +1,32 @@
+<!-- add.ejs -->
+<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="agregarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarModalLabel">Agregar Nueva Venta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/add" method="post">
+                    <div class="form-group">
+                        <label for="cantidad_producto">Cantidad</label>
+                        <input type="number" name="cantidad_producto" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sku_producto">SKU</label>
+                        <input type="text" name="sku_producto" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_cliente">ID Cliente</label>
+                        <input type="text" name="id_cliente" class="form-control" required>
+                    </div>
+                    <!-- Agregar aquí los demás campos del formulario -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" form="agregarForm" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabla Dinámica</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css" />
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Tabla de Ventas</h1>
+        <div class="mb-3">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarModal">
+                Agregar Venta
+            </button>
+        </div>
+        <table id="ventasTable" class="table table-dark table-striped table-bordered">
+            <thead>
+                <tr>
+                    <!-- <th>ID</th> -->
+                    <th>SKU</th>
+                    <th>Cantidad</th>
+
+                    <!-- <th>ID Cliente</th> -->
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                    <th>Fecha Venta</th>
+                    <th>Método de Pago</th>
+                    <th>Nombre Producto</th>
+                    <th>Nombre Cliente</th>
+                    <th>Resto Venta</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(venta=> { %>
+                    <tr>
+                        <!-- <td>
+                            <%= venta.id %>
+                        </td> -->
+                        <td>
+                            <%= venta.sku_producto %>
+                        </td>
+                        <td>
+                            <%= venta.cantidad_producto %>
+                        </td>
+
+                        <!-- <td>
+                            <%= venta.id_cliente %>
+                        </td> -->
+                        <td>
+                            <%= venta.precio_producto %>
+                        </td>
+                        <td>
+                            <%= venta.total %>
+                        </td>
+                        <td>
+                            <%= venta.fecha_venta %>
+                        </td>
+                        <td>
+                            <%= venta.metodo_pago %>
+                        </td>
+                        <td>
+                            <%= venta.nombre_producto %>
+                        </td>
+                        <td>
+                            <%= venta.nombre_cliente %>
+                        </td>
+                        <td>
+                            <%= venta.resto_venta %>
+                        </td>
+                        <td>
+                            <%= venta.estado %>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
+                                data-bs-target="#editModal" data-id="<%= venta.id %>">Editar</a>
+                            &nbsp; &nbsp;
+                            <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal" data-id="<%= venta.id %>">Eliminar</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Tabla de Clientes</h1>
+        <div class="mb-3">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarClienteModal">
+                Agregar Cliente
+            </button>
+        </div>
+        <table id="clientsTable" class="table table-dark table-striped table-bordered">
+            <thead>
+                <tr>
+                    <!-- <th>ID</th> -->
+                    <th>Nombre</th>
+                    <th>Rut</th>
+                    <th>Email</th>
+                    <th>Celular</th>
+                    <th>Dirección</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% clients.forEach(client=> { %>
+                    <tr>
+                        <!-- <td>
+                            <%= client.id %>
+                        </td> -->
+                        <td>
+                            <%= client.name %>
+                        </td>
+                        <td>
+                            <%= client.rut %>
+                        </td>
+                        <td>
+                            <%= client.email %>
+                        </td>
+                        <td>
+                            <%= client.cell_phone %>
+                        </td>
+                        <td>
+                            <%= client.address %>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
+                                data-bs-target="#editClientModal" data-id="<%= client.id %>">Editar</a>
+                            &nbsp; &nbsp;
+                            <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteClientModal" data-id="<%= client.id %>">Eliminar</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Tabla Productos  -->
+    <div class="container mt-5">
+        <h1 class="mb-4">Tabla de Productos</h1>
+        <div class="mb-3">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                Agregar Producto
+            </button>
+        </div>
+        <table id="productsTable" class="table table-dark table-striped table-bordered">
+            <thead>
+                <tr>
+                    <!-- <th>ID</th> -->
+                    <th>SKU</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Tipo</th>
+                    <th>Varante</th>
+                    <th>Unidad/Kg</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% products.forEach(product=> { %>
+                    <tr>
+                        <!-- <td>
+                            <%= product.id %>
+                        </td> -->
+
+                        <td>
+                            <%= product.sku %>
+                        </td>
+                        <td>
+                            <%= product.name %>
+                        </td>
+                        <td>
+                            <%= product.price %>
+                        </td>
+                        <td>
+                            <%= product.stock %>
+                        </td>
+                        <td>
+                            <%= product.type %>
+                        </td>
+                        <td>
+                            <%= product.variant %>
+                        </td>
+                        <td>
+                            <%= product.measurement %>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
+                                data-bs-target="#editarProductModal" data-id="<%= product.id %>">Editar</a>
+                            &nbsp; &nbsp;
+                            <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
+                                data-bs-target="#eliminarProductModal" data-id="<%= product.id %>">Eliminar</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal Agregar Producto -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">
+                        Agregar Producto
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add_product" method="post">
+                        <div class="form-group">
+                            <label for="name_product">Nombre Producto: </label>
+                            <input type="text" name="name_product" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="sku_product">SKU: </label>
+                            <input type="text" name="sku_product" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="measurement">uni/kg</label>
+                            <input type="text" name="measurement" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="price_product">Precio: </label>
+                            <input type="number" name="price_product" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="type_product">tipo</label>
+                            <input type="text" name="type_product" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="variante">variante</label>
+                            <input type="text" name="variant" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stock</label>
+                            <input type="number" name="stock" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Agregar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Agregar Cliente -->
+    <div class="modal fade" id="agregarClienteModal" aria-labelledby="agregarClientteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agregarClienteModalLabel">
+                        Agregar Cliente
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add_client" method="post">
+                        <div class="form-group">
+                            <label for="client_name">Nombre: &nbsp; &nbsp; </label>
+                            <input type="text" name="client_name" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="client_rut">Rut: &nbsp; &nbsp; </label>
+                            <input type="text" name="client_rut" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="client_email">Email: &nbsp; &nbsp; </label>
+                            <input type="email" name="client_email" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
+                            <input type="text" name="cell_phone" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="client_address">Direccion: &nbsp; &nbsp; </label>
+                            <input type="text" name="client_address" class="form-control" />
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">
+                            Agregar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Agregar -->
+    <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="agregarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agregarModalLabel">
+                        Agregar Venta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add" method="post">
+                        <div class="form-group">
+                            <label for="cantidad_producto">Cantidad</label>
+                            <input type="number" name="cantidad_producto" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="sku_producto">SKU</label>
+                            <input type="text" name="sku_producto" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="id_cliente">ID Cliente</label>
+                            <input type="text" name="id_cliente" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="precio_producto">Precio Unitario</label>
+                            <input type="text" name="precio_producto" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="total">Total</label>
+                            <input type="number" name="total" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha_venta">Fecha Venta</label>
+                            <input type="date" name="fecha_venta" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="metodo_pago">Método de Pago</label>
+                            <input type="text" name="metodo_pago" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre_producto">Nombre Producto</label>
+                            <input type="text" name="nombre_producto" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre_cliente">Nombre Cliente</label>
+                            <input type="text" name="nombre_cliente" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="resto_venta">Resto Venta</label>
+                            <input type="number" name="resto_venta" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input type="text" name="estado" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Agregar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">
+                        Editar Venta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" method="post">
+                        <div class="form-group">
+                            <label for="cantidad_producto">Cantidad</label>
+                            <input type="text" name="cantidad_producto" class="form-control" id="cantidad_producto" />
+                        </div>
+                        <div class="form-group">
+                            <label for="sku_producto">SKU</label>
+                            <input type="text" name="sku_producto" class="form-control" id="sku_producto" />
+                        </div>
+                        <div class="form-group">
+                            <label for="id_cliente">ID Cliente</label>
+                            <input type="text" name="id_cliente" class="form-control" id="id_cliente" />
+                        </div>
+                        <div class="form-group">
+                            <label for="precio_producto">Precio Unitario</label>
+                            <input type="text" name="precio_producto" class="form-control" id="precio_producto" />
+                        </div>
+                        <div class="form-group">
+                            <label for="total">Total</label>
+                            <input type="number" name="total" class="form-control" id="total" />
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha_venta">Fecha Venta</label>
+                            <input type="date" name="fecha_venta" class="form-control" id="fecha_venta" />
+                        </div>
+                        <div class="form-group">
+                            <label for="metodo_pago">Método de Pago</label>
+                            <input type="text" name="metodo_pago" class="form-control" id="metodo_pago" />
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre_producto">Nombre Producto</label>
+                            <input type="text" name="nombre_producto" class="form-control" id="nombre_producto" />
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre_cliente">Nombre Cliente</label>
+                            <input type="text" name="nombre_cliente" class="form-control" id="nombre_cliente" />
+                        </div>
+                        <div class="form-group">
+                            <label for="resto_venta">Resto Venta</label>
+                            <input type="number" name="resto_venta" class="form-control" id="resto_venta" />
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input type="text" name="estado" class="form-control" id="estado" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Guardar Cambios
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Delete Client -->
+    <div class="modal fade" id="deleteClientModal" tabindex="-1" aria-labelledby="deleteClientModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteClientModalLabel">
+                        Eliminar Cliente
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de que desea eliminar el cliente ?</p>
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteFormClient" method="post" action>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-success">
+                            Confirmar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Eliminar -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">
+                        Eliminar Venta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de que desea eliminar esta venta?</p>
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteForm" method="post" action="">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-danger">
+                            Eliminar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Editar Cliente -->
+    <div class="modal fade" id="editClientModal" tabindex="-1" aria-labelledby="editClientModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editClientModalLabel">
+                        Editar Cliente
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editClienteForm" method="post">
+                        <div class="form-group">
+                            <!-- <div class="form-group">
+                                <label for="nombre">Nombre: &nbsp; &nbsp;</label>
+                                <input type="text" name="nombre_edit" class="form-control" id="nombre_edit" />
+                            </div> -->
+                            <div class="form-group">
+                                <label for="client_name">Nombre: &nbsp; &nbsp; </label>
+                                <input type="text" name="client_name" class="form-control" id="client_name_edit" />
+                            </div>
+                            <div class="form-group">
+                                <label for="client_rut">Rut: &nbsp; &nbsp; </label>
+                                <input type="text" name="client_rut" class="form-control" id="client_rut_edit" />
+                            </div>
+                            <div class="form-group">
+                                <label for="client_email">Email: &nbsp; &nbsp; </label>
+                                <input type="email" name="client_email" class="form-control" id="client_email_edit" />
+                            </div>
+                            <div class="form-group">
+                                <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
+                                <input type="text" name="cell_phone" class="form-control" id="cell_phone_edit" />
+                            </div>
+                            <div class="form-group">
+                                <label for="client_address">Direccion: &nbsp; &nbsp; </label>
+                                <input type="text" name="client_address" class="form-control"
+                                    id="client_address_edit" />
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                Guardar Cambios
+                            </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Inicializar DataTables
+            $("#ventasTable").DataTable({
+                responsive: true, // Hacer la tabla responsiva
+                pageLength: 10, // Número de filas por página
+                language: {
+                    // Traducciones al español (puedes personalizarlas según tus necesidades)
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron resultados",
+                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar Ventas:",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior",
+                    },
+                },
+            });
+
+            // Restringir la búsqueda para que no sea sensible a mayúsculas/minúsculas
+            $.fn.dataTable.ext.type.search.string = function (data) {
+                return !data
+                    ? ""
+                    : typeof data === "string"
+                        ? data
+                            .replace(/έ/g, "ε")
+                            .replace(/ύ/g, "υ")
+                            .replace(/ό/g, "ο")
+                            .replace(/ώ/g, "ω")
+                            .replace(/ά/g, "α")
+                            .replace(/ί/g, "ι")
+                            .replace(/ή/g, "η")
+                            .replace(/έ/g, "ε")
+                            .replace(/ς/g, "σ")
+                            .replace(/ϊ/g, "ι")
+                            .replace(/ΰ/g, "υ")
+                            .replace(/ϋ/g, "υ")
+                            .replace(/ΐ/g, "ι")
+                        : data;
+            };
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Inicializar DataTables
+            $("#clientsTable").DataTable({
+                responsive: true, // Hacer la tabla responsiva
+                pageLength: 10, // Número de filas por página
+                language: {
+                    // Traducciones al español (puedes personalizarlas según tus necesidades)
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron resultados",
+                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar Cliente:",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior",
+                    },
+                },
+            });
+
+            // Restringir la búsqueda para que no sea sensible a mayúsculas/minúsculas
+            $.fn.dataTable.ext.type.search.string = function (data) {
+                return !data
+                    ? ""
+                    : typeof data === "string"
+                        ? data
+                            .replace(/έ/g, "ε")
+                            .replace(/ύ/g, "υ")
+                            .replace(/ό/g, "ο")
+                            .replace(/ώ/g, "ω")
+                            .replace(/ά/g, "α")
+                            .replace(/ί/g, "ι")
+                            .replace(/ή/g, "η")
+                            .replace(/έ/g, "ε")
+                            .replace(/ς/g, "σ")
+                            .replace(/ϊ/g, "ι")
+                            .replace(/ΰ/g, "υ")
+                            .replace(/ϋ/g, "υ")
+                            .replace(/ΐ/g, "ι")
+                        : data;
+            };
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Inicializar DataTables
+            $("#productsTable").DataTable({
+                responsive: true, // Hacer la tabla responsiva
+                pageLength: 10, // Número de filas por página
+                language: {
+                    // Traducciones al español (puedes personalizarlas según tus necesidades)
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron resultados",
+                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar Producto:",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior",
+                    },
+                },
+            });
+
+            // Restringir la búsqueda para que no sea sensible a mayúsculas/minúsculas
+            $.fn.dataTable.ext.type.search.string = function (data) {
+                return !data
+                    ? ""
+                    : typeof data === "string"
+                        ? data
+                            .replace(/έ/g, "ε")
+                            .replace(/ύ/g, "υ")
+                            .replace(/ό/g, "ο")
+                            .replace(/ώ/g, "ω")
+                            .replace(/ά/g, "α")
+                            .replace(/ί/g, "ι")
+                            .replace(/ή/g, "η")
+                            .replace(/έ/g, "ε")
+                            .replace(/ς/g, "σ")
+                            .replace(/ϊ/g, "ι")
+                            .replace(/ΰ/g, "υ")
+                            .replace(/ϋ/g, "υ")
+                            .replace(/ΐ/g, "ι")
+                        : data;
+            };
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtener el formulario de edición cuando se muestra el modal editar
+            $("#editModal").on("show.bs.modal", function (event) {
+                const button = $(event.relatedTarget); // Botón que activó el modal
+                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
+                const form = document.getElementById("editForm");
+                form.action = `/edit/${id}`; // Actualizar el atributo 'action' del formulario
+                console.log("el id", id)
+                // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
+                fetch(`/edit/${id}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        form.elements.cantidad_producto.value =
+                            data.cantidad_producto;
+                        form.elements.sku_producto.value =
+                            data.sku_producto;
+                        form.elements.id_cliente.value = data.id_cliente;
+                        form.elements.precio_producto.value =
+                            data.precio_producto;
+                        form.elements.total.value = data.total;
+                        form.elements.fecha_venta.value = data.fecha_venta;
+                        form.elements.metodo_pago.value = data.metodo_pago;
+                        form.elements.nombre_producto.value =
+                            data.nombre_producto;
+                        form.elements.nombre_cliente.value =
+                            data.nombre_cliente;
+                        form.elements.resto_venta.value = data.resto_venta;
+                        form.elements.estado.value = data.estado;
+                    })
+                    .catch((error) =>
+                        console.error(
+                            "Error al obtener los datos de la venta:",
+                            error
+                        )
+                    );
+            });
+
+            /** editar cliente modal*/
+            $("#editClientModal").on("show.bs.modal", function (event) {
+                const button = $(event.relatedTarget); // Botón que activó el modal
+                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
+                const form = document.getElementById("editClienteForm");
+                form.action = `/edit_client/${id}` // Actualizar el atributo 'action' del formulario
+                console.log("el id", id)
+                // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
+                fetch(`/edit_client/${id}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        form.elements.client_name_edit.value = data.name;
+                        form.elements.client_rut_edit.value = data.rut;
+                        form.elements.client_email_edit.value = data.email;
+                        form.elements.cell_phone_edit.value = data.cell_phone;
+                        form.elements.client_address_edit.value = data.address;
+                    })
+                    .catch((error) =>
+                        console.error(
+                            "Error al obtener los datos de la venta:",
+                            error
+                        )
+                    );
+            });
+
+            // Obtener el formulario de eliminación cuando se muestra el modal eliminar
+            $("#deleteModal").on("show.bs.modal", function (event) {
+                const button = $(event.relatedTarget); // Botón que activó el modal
+                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
+                console.log("ID del registro a eliminar:", id);
+                const form = document.getElementById("deleteForm");
+                form.action = `/delete/${id}`; // Actualizar el atributo 'action' del formulario
+            });
+
+            // Obtener el formulario de eliminación cuando se muestra el modal eliminar
+            $("#deleteClientModal").on("show.bs.modal", function (event) {
+                const button = $(event.relatedTarget); // Botón que activó el modal
+                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
+                console.log("ID del registro a eliminar:", id);
+                const form = document.getElementById("deleteFormClient");
+                form.action = `/delete_client/${id}`; // Actualizar el atributo 'action' del formulario
+                console.log(form.action)
+            });
+
+            // Eliminar el registro al enviar el formulario
+            $("#deleteForm").on("submit", async function (event) {
+                event.preventDefault();
+                const url = this.action;
+                console.log("URL de la solicitud DELETE:", url);
+                // Realizar la solicitud de eliminación mediante AJAX
+                try {
+                    const response = await $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        dataType: "json",
+                    });
+
+                    if (response.success) {
+                        console.log("Registro eliminado exitosamente.");
+                        // location.reload();
+                        // Mostrar algún mensaje de confirmación al usuario si lo deseas
+                    } else {
+                        console.error(
+                            "Error al eliminar el registro:",
+                            response.message
+                        );
+                        alert("Error al eliminar el registro");
+                    }
+                    // Actualizar la tabla después de eliminar el registro
+                    // $('#ventasTable').DataTable().ajax.reload(null, false);
+                } catch (error) {
+                    console.error(
+                        "Error al eliminar el registro:",
+                        error.stack
+                    );
+                    console.log(error);
+                    alert("Error al eliminar el registro");
+                }
+            });
+
+            // Eliminar el registro al enviar el formulario
+            $("#deleteFormClient").on("submit", async function (event) {
+                event.preventDefault();
+                const url = this.action;
+                console.log("URL de la solicitud DELETE:", url);
+                // Realizar la solicitud de eliminación mediante AJAX
+                try {
+                    const response = await $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        dataType: "json",
+                    });
+
+                    if (response.success) {
+                        console.log("Registro eliminado exitosamente.");
+                        location.reload();
+                        // Mostrar algún mensaje de confirmación al usuario si lo deseas
+                    } else {
+                        console.error(
+                            "Error al eliminar el registro:",
+                            response.message
+                        );
+                        alert("Error al eliminar el registro");
+                    }
+                    // Actualizar la tabla después de eliminar el registro
+                    // $('#ventasTable').DataTable().ajax.reload(null, false);
+                } catch (error) {
+                    console.error(
+                        "Error al eliminar el registro:",
+                        error.stack
+                    );
+                    console.log(error);
+                    alert("Error al eliminar el registro");
+                }
+            });
+
+        });
+
+
+    </script>
+</body>
+
+</html>
