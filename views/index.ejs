@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tabla Dinámica</title>
+    <title>Flores</title>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" />
@@ -24,12 +24,12 @@
                 <tr>
                     <th>SKU</th>
                     <th>Cantidad</th>
-                    <th>Precio Unitario</th>
+                    <th>Precio</th>
                     <th>Total</th>
-                    <th>Fecha Venta</th>
-                    <th>Método de Pago</th>
-                    <th>Nombre Producto</th>
-                    <th>Nombre Cliente</th>
+                    <th>Fecha</th>
+                    <th>Método Pago</th>
+                    <th>Producto</th>
+                    <th>Cliente</th>
                     <th>Resto Venta</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -38,15 +38,12 @@
             <tbody>
                 <% data.forEach(venta=> { %>
                     <tr>
-
                         <td>
                             <%= venta.sku_producto %>
                         </td>
                         <td>
                             <%= venta.cantidad_producto %>
                         </td>
-
-
                         <td>
                             <%= venta.precio_producto %>
                         </td>
@@ -94,7 +91,6 @@
         <table id="clientsTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
-                    <!-- <th>ID</th> -->
                     <th>Nombre</th>
                     <th>Rut</th>
                     <th>Email</th>
@@ -106,9 +102,6 @@
             <tbody>
                 <% clients.forEach(client=> { %>
                     <tr>
-                        <!-- <td>
-                            <%= client.id %>
-                        </td> -->
                         <td>
                             <%= client.name %>
                         </td>
@@ -168,10 +161,10 @@
                             <%= product.name %>
                         </td>
                         <td>
-                            <%= product.price %>
+                            <%= product.price_formated %>
                         </td>
                         <td>
-                            <%= product.stock %>
+                            <%= product.stock_formated %>
                         </td>
                         <td>
                             <%= product.type %>
@@ -210,31 +203,31 @@
                     <form action="/add_product" method="post">
                         <div class="form-group">
                             <label for="name_product">Nombre Producto: </label>
-                            <input type="text" name="name_product" class="form-control" />
+                            <input type="text" name="name_product" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="sku_product">SKU: </label>
-                            <input type="text" name="sku_product" class="form-control" />
+                            <input type="text" name="sku_product" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="measurement">UNI/KG:</label>
-                            <input type="text" name="measurement" class="form-control" />
+                            <input type="text" name="measurement" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="price_product">Precio: </label>
-                            <input type="number" name="price_product" class="form-control" />
+                            <input type="number" name="price_product" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="type_product">Tipo:</label>
-                            <input type="text" name="type_product" class="form-control" />
+                            <input type="text" name="type_product" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="variant">Variante:</label>
-                            <input type="text" name="variant" class="form-control" />
+                            <input type="text" name="variant" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="stock">Stock:</label>
-                            <input type="number" name="stock" class="form-control" />
+                            <input type="number" name="stock" class="form-control" required/>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">
@@ -260,23 +253,23 @@
                     <form action="/add_client" method="post">
                         <div class="form-group">
                             <label for="client_name">Nombre: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_name" class="form-control" />
+                            <input type="text" name="client_name" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="client_rut">Rut: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_rut" class="form-control" />
+                            <input type="text" name="client_rut" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="client_email">Email: &nbsp; &nbsp; </label>
-                            <input type="email" name="client_email" class="form-control" />
+                            <input type="email" name="client_email" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
-                            <input type="text" name="cell_phone" class="form-control" />
+                            <input type="text" name="cell_phone" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="client_address">Direccion: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_address" class="form-control" />
+                            <input type="text" name="client_address" class="form-control" required />
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">
@@ -302,47 +295,47 @@
                     <form action="/add" method="post">
                         <div class="form-group">
                             <label for="cantidad_producto">Cantidad</label>
-                            <input type="number" name="cantidad_producto" class="form-control" />
+                            <input type="number" name="cantidad_producto" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="sku_producto">SKU</label>
-                            <input type="text" name="sku_producto" class="form-control" />
+                            <input type="text" name="sku_producto" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="id_cliente">ID Cliente</label>
-                            <input type="text" name="id_cliente" class="form-control" />
+                            <input type="text" name="id_cliente" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="precio_producto">Precio Unitario</label>
-                            <input type="text" name="precio_producto" class="form-control" />
+                            <input type="text" name="precio_producto" class="form-control"required />
                         </div>
                         <div class="form-group">
                             <label for="total">Total</label>
-                            <input type="number" name="total" class="form-control" />
+                            <input type="number" name="total" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="fecha_venta">Fecha Venta</label>
-                            <input type="date" name="fecha_venta" class="form-control" />
+                            <input type="date" name="fecha_venta" class="form-control" required/>
                         </div>
                         <div class="form-group">
                             <label for="metodo_pago">Método de Pago</label>
-                            <input type="text" name="metodo_pago" class="form-control" />
+                            <input type="text" name="metodo_pago" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="nombre_producto">Nombre Producto</label>
-                            <input type="text" name="nombre_producto" class="form-control" />
+                            <input type="text" name="nombre_producto" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="nombre_cliente">Nombre Cliente</label>
-                            <input type="text" name="nombre_cliente" class="form-control" />
+                            <input type="text" name="nombre_cliente" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="resto_venta">Resto Venta</label>
-                            <input type="number" name="resto_venta" class="form-control" />
+                            <input type="number" name="resto_venta" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="estado">Estado</label>
-                            <input type="text" name="estado" class="form-control" />
+                            <input type="text" name="estado" class="form-control"  required/>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">
@@ -520,23 +513,23 @@
                     <form id="editClienteForm" method="post">
                         <div class="form-group">
                             <label for="client_name">Nombre: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_name" class="form-control" id="client_name_edit" />
+                            <input type="text" name="client_name" class="form-control" id="client_name_edit" required/>
                         </div>
                         <div class="form-group">
                             <label for="client_rut">Rut: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_rut" class="form-control" id="client_rut_edit" />
+                            <input type="text" name="client_rut" class="form-control" id="client_rut_edit" required/>
                         </div>
                         <div class="form-group">
                             <label for="client_email">Email: &nbsp; &nbsp; </label>
-                            <input type="email" name="client_email" class="form-control" id="client_email_edit" />
+                            <input type="email" name="client_email" class="form-control" id="client_email_edit" required />
                         </div>
                         <div class="form-group">
                             <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
-                            <input type="text" name="cell_phone" class="form-control" id="cell_phone_edit" />
+                            <input type="text" name="cell_phone" class="form-control" id="cell_phone_edit" required/>
                         </div>
                         <div class="form-group">
                             <label for="client_address">Direccion: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_address" class="form-control" id="client_address_edit" />
+                            <input type="text" name="client_address" class="form-control" id="client_address_edit" required/>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">
@@ -825,7 +818,6 @@
                         form.elements.type_product_edit.value = data.type;
                         form.elements.variant_edit.value = data.variant;
                         form.elements.stock_edit.value = data.stock;
-
                     })
                     .catch((error) =>
                         console.error(
@@ -973,8 +965,6 @@
             });
 
         });
-
-
     </script>
 </body>
 
