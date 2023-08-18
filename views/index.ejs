@@ -22,11 +22,8 @@
         <table id="ventasTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
-                    <!-- <th>ID</th> -->
                     <th>SKU</th>
                     <th>Cantidad</th>
-
-                    <!-- <th>ID Cliente</th> -->
                     <th>Precio Unitario</th>
                     <th>Total</th>
                     <th>Fecha Venta</th>
@@ -41,9 +38,7 @@
             <tbody>
                 <% data.forEach(venta=> { %>
                     <tr>
-                        <!-- <td>
-                            <%= venta.id %>
-                        </td> -->
+
                         <td>
                             <%= venta.sku_producto %>
                         </td>
@@ -51,9 +46,7 @@
                             <%= venta.cantidad_producto %>
                         </td>
 
-                        <!-- <td>
-                            <%= venta.id_cliente %>
-                        </td> -->
+
                         <td>
                             <%= venta.precio_producto %>
                         </td>

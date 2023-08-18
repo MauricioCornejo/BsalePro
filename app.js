@@ -42,7 +42,7 @@ app.get('/', async (req, res) => {
         data.products = products
         client.release();
         res.render('index', { data, clients, products }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
-        res.render('index', {clients}); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
+        // res.render('index', {clients}); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
     } catch (error) {
         console.error('Error al obtener los datos:', error);
         res.status(500).send('Error al obtener los datos');
