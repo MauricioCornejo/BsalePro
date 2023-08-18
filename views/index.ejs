@@ -184,7 +184,7 @@
                         </td>
                         <td>
                             <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
-                                data-bs-target="#editarProductModal" data-id="<%= product.id %>">Editar</a>
+                                data-bs-target="#editProductModal" data-id="<%= product.id %>">Editar</a>
                             &nbsp; &nbsp;
                             <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
                                 data-bs-target="#deleteProductModal" data-id="<%= product.id %>">Eliminar</a>
@@ -229,7 +229,7 @@
                             <input type="text" name="type_product" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="variante">Variante:</label>
+                            <label for="variant">Variante:</label>
                             <input type="text" name="variant" class="form-control" />
                         </div>
                         <div class="form-group">
@@ -517,34 +517,81 @@
                 <div class="modal-body">
                     <form id="editClienteForm" method="post">
                         <div class="form-group">
-                            <!-- <div class="form-group">
-                                <label for="nombre">Nombre: &nbsp; &nbsp;</label>
-                                <input type="text" name="nombre_edit" class="form-control" id="nombre_edit" />
-                            </div> -->
-                            <div class="form-group">
-                                <label for="client_name">Nombre: &nbsp; &nbsp; </label>
-                                <input type="text" name="client_name" class="form-control" id="client_name_edit" />
-                            </div>
-                            <div class="form-group">
-                                <label for="client_rut">Rut: &nbsp; &nbsp; </label>
-                                <input type="text" name="client_rut" class="form-control" id="client_rut_edit" />
-                            </div>
-                            <div class="form-group">
-                                <label for="client_email">Email: &nbsp; &nbsp; </label>
-                                <input type="email" name="client_email" class="form-control" id="client_email_edit" />
-                            </div>
-                            <div class="form-group">
-                                <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
-                                <input type="text" name="cell_phone" class="form-control" id="cell_phone_edit" />
-                            </div>
-                            <div class="form-group">
-                                <label for="client_address">Direccion: &nbsp; &nbsp; </label>
-                                <input type="text" name="client_address" class="form-control"
-                                    id="client_address_edit" />
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                Guardar Cambios
-                            </button>
+                            <label for="client_name">Nombre: &nbsp; &nbsp; </label>
+                            <input type="text" name="client_name" class="form-control" id="client_name_edit" />
+                        </div>
+                        <div class="form-group">
+                            <label for="client_rut">Rut: &nbsp; &nbsp; </label>
+                            <input type="text" name="client_rut" class="form-control" id="client_rut_edit" />
+                        </div>
+                        <div class="form-group">
+                            <label for="client_email">Email: &nbsp; &nbsp; </label>
+                            <input type="email" name="client_email" class="form-control" id="client_email_edit" />
+                        </div>
+                        <div class="form-group">
+                            <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
+                            <input type="text" name="cell_phone" class="form-control" id="cell_phone_edit" />
+                        </div>
+                        <div class="form-group">
+                            <label for="client_address">Direccion: &nbsp; &nbsp; </label>
+                            <input type="text" name="client_address" class="form-control" id="client_address_edit" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Guardar Cambios
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Producto -->
+    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProductModalLabel">
+                        Editar Producto
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProductForm" method="post">
+                        <div class="form-group">
+                            <label for="name_product">Nombre Producto: &nbsp; &nbsp; </label>
+                            <input type="text" name="name_product" class="form-control" id="name_product_edit"
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="sku_product">SKU: &nbsp; &nbsp; </label>
+                            <input type="text" name="sku_product" class="form-control" id="sku_product_edit" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="measurement">UNI/KG: &nbsp; &nbsp; </label>
+                            <input type="text" name="measurement" class="form-control" id="measurement_edit" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="price_product">Precio: &nbsp; &nbsp; </label>
+                            <input type="number" name="price_product" class="form-control" id="price_product_edit"
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo: &nbsp; &nbsp; </label>
+                            <input type="text" name="type_product" class="form-control" id="type_product_edit"
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="variant">Variante: &nbsp; &nbsp; </label>
+                            <input type="text" name="variant" class="form-control" id="variant_edit" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stock: &nbsp; &nbsp; </label>
+                            <input type="number" name="stock" class="form-control" id="stock_edit" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Guardar Cambios
+                        </button>
                     </form>
                 </div>
             </div>
@@ -755,6 +802,35 @@
                     );
             });
 
+            /** editar cliente modal*/
+            $("#editProductModal").on("show.bs.modal", function (event) {
+                const button = $(event.relatedTarget); // Botón que activó el modal
+                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
+                const form = document.getElementById("editProductForm");
+                form.action = `/edit_product/${id}` // Actualizar el atributo 'action' del formulario
+                console.log("el id", id)
+                // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
+                fetch(`/edit_product/${id}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data)
+                        form.elements.name_product_edit.value = data.name;
+                        form.elements.sku_product.value = data.sku;
+                        form.elements.measurement_edit.value = data.measurement;
+                        form.elements.price_product_edit.value = data.price;
+                        form.elements.type_product_edit.value = data.type;
+                        form.elements.variant_edit.value = data.variant;
+                        form.elements.stock_edit.value = data.stock;
+
+                    })
+                    .catch((error) =>
+                        console.error(
+                            "Error al obtener los datos de la venta:",
+                            error
+                        )
+                    );
+            });
+
             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
             $("#deleteModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
@@ -783,6 +859,7 @@
                 form.action = `/delete_product/${id}`; // Actualizar el atributo 'action' del formulario
                 console.log(form.action)
             });
+
             // Eliminar el registro al enviar el formulario
             $("#deleteForm").on("submit", async function (event) {
                 event.preventDefault();

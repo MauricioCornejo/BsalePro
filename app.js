@@ -21,7 +21,6 @@ const pool = new Pool({
     port: 5432
 });
 
-
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -48,7 +47,6 @@ app.get('/', async (req, res) => {
         res.status(500).send('Error al obtener los datos');
     }
 });
-
 
 // Agregar un registro (Mostrar modal de agregar)
 app.get('/add', (req, res) => {
@@ -106,7 +104,6 @@ app.post('/add', async (req, res) => {
     }
 });
 
-
 // Editar un registro (Mostrar modal de editar)
 app.get('/edit/:id', async (req, res) => {
     try {
@@ -122,7 +119,6 @@ app.get('/edit/:id', async (req, res) => {
         res.status(500).json({ error: 'Error al obtener el registro' }); // Responder con un objeto JSON en caso de error
     }
 });
-
 
 app.post('/edit/:id', async (req, res) => {
     try {
@@ -310,6 +306,56 @@ app.post('/add_product', async (req, res) => {
     }
 });
 
+// Editar un registro (Mostrar modal de editar)
+app.get('/edit_product/:id', async (req, res) => {
+    try {
+        console.log("******************* LLEGUE AL EDIT product GET")
+        const { id } = req.params;
+        const client = await pool.connect();
+        const resultSearch = await client.query('SELECT * FROM flores.product WHERE id = $1', [id]);
+        const clientsSearch = resultSearch.rows[0];
+        client.release();
+        console.log('resultSearch product:', resultSearch.rows[0]);
+        // res.render('edit_client/:id');
+        res.json(clientsSearch); // Responder con el objeto venta en formato JSON
+    } catch (error) {
+        console.error('Error al obtener el registro:', error);
+        res.status(500).json({ error: 'Error al obtener el registro' }); // Responder con un objeto JSON en caso de error
+    }
+});
+
+// edit product
+app.post('/edit_product/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { sku_product,
+            name_product,
+            price_product,
+            type_product,
+            stock,
+            variant,
+            measurement
+        } = req.body;
+        console.log("*****************LLEGUE AL POST EDITAR ************************************")
+        const client = await pool.connect();
+        await client.query(
+            `UPDATE flores.product SET sku = $1, name = $2, price = $3, type = $4, stock = $5, variant = $6, measurement = $7 WHERE id = $8`,
+            [sku_product,
+                name_product,
+                price_product,
+                type_product,
+                stock,
+                variant,
+                measurement,
+                id]
+        );
+        client.release();
+        res.redirect('/');
+    } catch (error) {
+        console.error('Error al editar el registro:', error);
+        res.status(500).send('Error al editar el registro');
+    }
+});
 
 // Eliminar un registro de producto (Mostrar modal de eliminar)
 app.delete('/delete_product/:id', async (req, res) => {
@@ -325,7 +371,6 @@ app.delete('/delete_product/:id', async (req, res) => {
         res.status(500).json({ success: false, message: 'Error al eliminar el registro' });
     }
 });
-
 
 app.listen(3000, () => {
     console.log('Servidor iniciado en http://localhost:3000');
