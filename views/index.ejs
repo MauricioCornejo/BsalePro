@@ -148,7 +148,6 @@
         <table id="productsTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
-                    <!-- <th>ID</th> -->
                     <th>SKU</th>
                     <th>Nombre</th>
                     <th>Precio</th>
@@ -162,10 +161,6 @@
             <tbody>
                 <% products.forEach(product=> { %>
                     <tr>
-                        <!-- <td>
-                            <%= product.id %>
-                        </td> -->
-
                         <td>
                             <%= product.sku %>
                         </td>
@@ -192,7 +187,7 @@
                                 data-bs-target="#editarProductModal" data-id="<%= product.id %>">Editar</a>
                             &nbsp; &nbsp;
                             <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
-                                data-bs-target="#eliminarProductModal" data-id="<%= product.id %>">Eliminar</a>
+                                data-bs-target="#deleteProductModal" data-id="<%= product.id %>">Eliminar</a>
                         </td>
                     </tr>
                     <% }) %>
@@ -222,7 +217,7 @@
                             <input type="text" name="sku_product" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="measurement">uni/kg</label>
+                            <label for="measurement">UNI/KG:</label>
                             <input type="text" name="measurement" class="form-control" />
                         </div>
                         <div class="form-group">
@@ -230,17 +225,18 @@
                             <input type="number" name="price_product" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="type_product">tipo</label>
+                            <label for="type_product">Tipo:</label>
                             <input type="text" name="type_product" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="variante">variante</label>
+                            <label for="variante">Variante:</label>
                             <input type="text" name="variant" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="stock">Stock</label>
+                            <label for="stock">Stock:</label>
                             <input type="number" name="stock" class="form-control" />
                         </div>
+                        <br>
                         <button type="submit" class="btn btn-primary">
                             Agregar
                         </button>
@@ -415,6 +411,35 @@
                         </div>
                         <button type="submit" class="btn btn-primary">
                             Guardar Cambios
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete Product -->
+    <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteProductModalLabel">
+                        Eliminar Product
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de que desea eliminar el producto ?</p>
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteFormProduct" method="post" action>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-success">
+                            Confirmar
                         </button>
                     </form>
                 </div>
@@ -749,6 +774,15 @@
                 console.log(form.action)
             });
 
+            // Obtener el formulario de eliminación cuando se muestra el modal eliminar
+            $("#deleteProductModal").on("show.bs.modal", function (event) {
+                const button = $(event.relatedTarget); // Botón que activó el modal
+                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
+                console.log("ID del registro a eliminar:", id);
+                const form = document.getElementById("deleteFormProduct");
+                form.action = `/delete_product/${id}`; // Actualizar el atributo 'action' del formulario
+                console.log(form.action)
+            });
             // Eliminar el registro al enviar el formulario
             $("#deleteForm").on("submit", async function (event) {
                 event.preventDefault();
@@ -787,6 +821,42 @@
 
             // Eliminar el registro al enviar el formulario
             $("#deleteFormClient").on("submit", async function (event) {
+                event.preventDefault();
+                const url = this.action;
+                console.log("URL de la solicitud DELETE:", url);
+                // Realizar la solicitud de eliminación mediante AJAX
+                try {
+                    const response = await $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        dataType: "json",
+                    });
+
+                    if (response.success) {
+                        console.log("Registro eliminado exitosamente.");
+                        location.reload();
+                        // Mostrar algún mensaje de confirmación al usuario si lo deseas
+                    } else {
+                        console.error(
+                            "Error al eliminar el registro:",
+                            response.message
+                        );
+                        alert("Error al eliminar el registro");
+                    }
+                    // Actualizar la tabla después de eliminar el registro
+                    // $('#ventasTable').DataTable().ajax.reload(null, false);
+                } catch (error) {
+                    console.error(
+                        "Error al eliminar el registro:",
+                        error.stack
+                    );
+                    console.log(error);
+                    alert("Error al eliminar el registro");
+                }
+            });
+
+            // Eliminar el registro al enviar el formulario
+            $("#deleteFormProduct").on("submit", async function (event) {
                 event.preventDefault();
                 const url = this.action;
                 console.log("URL de la solicitud DELETE:", url);

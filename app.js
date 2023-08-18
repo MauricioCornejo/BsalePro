@@ -310,6 +310,23 @@ app.post('/add_product', async (req, res) => {
     }
 });
 
+
+// Eliminar un registro de producto (Mostrar modal de eliminar)
+app.delete('/delete_product/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const client = await pool.connect();
+        await client.query(`DELETE FROM flores.product WHERE id = $1`, [id]);
+        client.release();
+        res.json({ success: true });
+    } catch (error) {
+        const { id } = req.params;
+        console.error('Error al eliminar el registro:', error, [id]);
+        res.status(500).json({ success: false, message: 'Error al eliminar el registro' });
+    }
+});
+
+
 app.listen(3000, () => {
     console.log('Servidor iniciado en http://localhost:3000');
 });
