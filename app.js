@@ -14,9 +14,10 @@ const { v4: uuidv4 } = require('uuid');
 //Prod 
 const pool = new Pool({
     user: 'flores',
-    host: 'dpg-cjfaqnqnip6c739eemgg-a',
+    host: 'dpg-cjfaqnqnip6c739eemgg-a.ohio-postgres.render.com',
     database: 'flores',
     password: '2ozHMesEMGur2Fuuawl4LU2CnITcBCQx',
+    ssl: true,
     port: 5432
 });
 
@@ -28,20 +29,20 @@ app.use(express.static('public'));
 // Obtener registros de la base de datos
 app.get('/', async (req, res) => {
     try {
-        // const client = await pool.connect();
-        // let result = await client.query('SELECT * FROM flores.ventas');
-        // const data = result.rows;
-        // const clientsResult = await client.query('SELECT * FROM flores.client');
-        // const clients = clientsResult.rows;
+        const client = await pool.connect();
+        let result = await client.query('SELECT * FROM flores.ventas');
+        const data = result.rows;
+        const clientsResult = await client.query('SELECT * FROM flores.client');
+        const clients = clientsResult.rows;
 
-        // const productsResult = await client.query('SELECT * FROM flores.product');
-        // const products = productsResult.rows;
-        // // console.log(clients)
-        // data.clients = clients
-        // data.products = products
-        // client.release();
-        // res.render('index', { data, clients, products }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
-        res.render('index', { }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
+        const productsResult = await client.query('SELECT * FROM flores.product');
+        const products = productsResult.rows;
+        // console.log(clients)
+        data.clients = clients
+        data.products = products
+        client.release();
+        res.render('index', { data, clients, products }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
+        res.render('index', {clients}); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
     } catch (error) {
         console.error('Error al obtener los datos:', error);
         res.status(500).send('Error al obtener los datos');
