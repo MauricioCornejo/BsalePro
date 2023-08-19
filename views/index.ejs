@@ -19,6 +19,11 @@
                 Agregar Venta
             </button>
         </div>
+        <div class="mb-3">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSaleModal">
+                addSaleModal
+            </button>
+        </div>
         <table id="ventasTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
@@ -211,23 +216,23 @@
                         </div>
                         <div class="form-group">
                             <label for="measurement">UNI/KG:</label>
-                            <input type="text" name="measurement" class="form-control" required/>
+                            <input type="text" name="measurement" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="price_product">Precio: </label>
-                            <input type="number" name="price_product" class="form-control" required/>
+                            <input type="number" name="price_product" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="type_product">Tipo:</label>
-                            <input type="text" name="type_product" class="form-control" required/>
+                            <input type="text" name="type_product" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="variant">Variante:</label>
-                            <input type="text" name="variant" class="form-control" required/>
+                            <input type="text" name="variant" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="stock">Stock:</label>
-                            <input type="number" name="stock" class="form-control" required/>
+                            <input type="number" name="stock" class="form-control" required />
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">
@@ -257,7 +262,7 @@
                         </div>
                         <div class="form-group">
                             <label for="client_rut">Rut: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_rut" class="form-control" required/>
+                            <input type="text" name="client_rut" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="client_email">Email: &nbsp; &nbsp; </label>
@@ -265,7 +270,7 @@
                         </div>
                         <div class="form-group">
                             <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
-                            <input type="text" name="cell_phone" class="form-control" required/>
+                            <input type="text" name="cell_phone" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="client_address">Direccion: &nbsp; &nbsp; </label>
@@ -292,6 +297,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
+
                     <form action="/add" method="post">
                         <div class="form-group">
                             <label for="cantidad_producto">Cantidad</label>
@@ -299,15 +305,15 @@
                         </div>
                         <div class="form-group">
                             <label for="sku_producto">SKU</label>
-                            <input type="text" name="sku_producto" class="form-control" required/>
+                            <input type="text" name="sku_producto" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="id_cliente">ID Cliente</label>
-                            <input type="text" name="id_cliente" class="form-control" required/>
+                            <input type="text" name="id_cliente" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="precio_producto">Precio Unitario</label>
-                            <input type="text" name="precio_producto" class="form-control"required />
+                            <input type="text" name="precio_producto" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="total">Total</label>
@@ -315,7 +321,7 @@
                         </div>
                         <div class="form-group">
                             <label for="fecha_venta">Fecha Venta</label>
-                            <input type="date" name="fecha_venta" class="form-control" required/>
+                            <input type="date" name="fecha_venta" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="metodo_pago">Método de Pago</label>
@@ -335,17 +341,214 @@
                         </div>
                         <div class="form-group">
                             <label for="estado">Estado</label>
-                            <input type="text" name="estado" class="form-control"  required/>
+                            <input type="text" name="estado" class="form-control" required />
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">
                             Agregar
                         </button>
                     </form>
+                    <table id="produTable" class="table table-dark table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>Descuento</th>
+                                <th>Sub Total</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <% clients.forEach(client=> { %> 
+                            <tr>
+                                <td>
+                                    <%= client.name %>
+                                </td>
+                                <td>
+                                     <%= client.rut %> 
+                                </td>
+                                <td>
+                                    <%= client.email %> 
+                                </td>
+                                <td>
+                                   <%= client.cell_phone %> 
+                                </td>
+                                <td>
+                                     <%= client.address %> 
+                                </td>
+                                <td>
+                                   <%= client.address %> 
+                                </td>
+                               <td>
+                                        <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
+                                            data-bs-target="#editClientModal" data-id="<%= client.id %>">Editar</a>
+                                        &nbsp; &nbsp;
+                                        <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
+                                            data-bs-target="#deleteClientModal" data-id="<%= client.id %>">Eliminar</a>
+                                    </td> 
+                            </tr> 
+                             <% }) %> -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal Agregar venta-->
+    <div class="modal fade" id="addSaleModal" tabindex="-1" aria-labelledby="addSaleModalLabel" aria-hidden="true"
+        data-bs-target="#staticBackdrop">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSaleModalLabel">
+                        Agregar Venta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form action="/add_sale" method="post">
+                            <div class="row">
+                                <div class="col-md-1 ">
+                                    <label for="id_client_select">Cliente: </label>
+                                </div>
+                                <div class="col-md-5 ">
+                                    <div class="form-group">
+                                        <select class="form-select" data-live-search="true"
+                                            aria-label="selectClientSale" name="id_client_select" required>
+                                            <% clients.forEach(client=> { %>
+                                                <option value=<%=client.id %>><%= client.name %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 " style="align-content: end;">
+                                    <label for="fecha_venta">Fecha Venta:</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+
+                                        <input type="date" name="fecha_venta" class="form-control" required />
+                                    </div>
+                                    <!-- <input type="date" name="fecha_venta" class="form-control" required /> -->
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-2 ">
+                                    <label for="payment_method">Método de Pago: </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" name="payment_method" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 ">
+                                    <label for="resto_venta">Resto Venta: </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="number" name="resto_venta" class="form-control" required />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-2 ">
+                                    <label for="estado">Estado: </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" name="estado" class="form-control" required />
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-1 ">
+                                    <label for="id_product_select">Productos: </label>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <select class="form-select" data-live-search="true" aria-label="selectProductsSale"
+                                        name="id_product_select" id="id_product_select" required>
+                                        <% products.forEach(product=> { %>
+                                            <option value="<%= product.id %>">
+                                                <%= product.name %>, Precio: $<%= product.price_formated %>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+                                <div class="col-md-1 ">
+                                    <label for="quantity">Cantidad:</label>
+                                </div>
+                                <div class="col-md-1 ">
+                                    <div class="form-group">
+                                        <input type="number" min="1" name="quantity" class="form-control" id="quantity"
+                                            required />
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-1 ">
+                                    <label for="quantity">Descuento:</label>
+                                </div>
+                                <div class="col-md-2 ">
+                                    <div class="form-group">
+                                        <input type="number" min="0" name="discount" id="discount" class="form-control"
+                                            required />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <button class="btn btn-primary btn-sm" id="add_product_sale">
+                                        Agregar Producto
+                                    </button>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="container mt-5">
+                                    <table id="productSaleTable" class="table table-dark table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio Unitario</th>
+                                                <th>Descuento</th>
+                                                <th>Sub Total</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <button type="submit" class="btn btn-primary">
+                                        Agregar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <br>
+                       
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <!-- Modal Editar -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -381,7 +584,7 @@
                         </div>
                         <div class="form-group">
                             <label for="fecha_venta">Fecha Venta</label>
-                            <input type="date" name="fecha_venta" class="form-control" id="fecha_venta" />
+                            <input type="date" name="sale_date" class="form-control" id="sale_date" />
                         </div>
                         <div class="form-group">
                             <label for="metodo_pago">Método de Pago</label>
@@ -400,8 +603,8 @@
                             <input type="number" name="resto_venta" class="form-control" id="resto_venta" />
                         </div>
                         <div class="form-group">
-                            <label for="estado">Estado</label>
-                            <input type="text" name="estado" class="form-control" id="estado" />
+                            <label for="status_sale">Estado</label>
+                            <input type="text" name="status_sale" class="form-control" id="status_sale" />
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">
@@ -513,23 +716,25 @@
                     <form id="editClienteForm" method="post">
                         <div class="form-group">
                             <label for="client_name">Nombre: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_name" class="form-control" id="client_name_edit" required/>
+                            <input type="text" name="client_name" class="form-control" id="client_name_edit" required />
                         </div>
                         <div class="form-group">
                             <label for="client_rut">Rut: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_rut" class="form-control" id="client_rut_edit" required/>
+                            <input type="text" name="client_rut" class="form-control" id="client_rut_edit" required />
                         </div>
                         <div class="form-group">
                             <label for="client_email">Email: &nbsp; &nbsp; </label>
-                            <input type="email" name="client_email" class="form-control" id="client_email_edit" required />
+                            <input type="email" name="client_email" class="form-control" id="client_email_edit"
+                                required />
                         </div>
                         <div class="form-group">
                             <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
-                            <input type="text" name="cell_phone" class="form-control" id="cell_phone_edit" required/>
+                            <input type="text" name="cell_phone" class="form-control" id="cell_phone_edit" required />
                         </div>
                         <div class="form-group">
                             <label for="client_address">Direccion: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_address" class="form-control" id="client_address_edit" required/>
+                            <input type="text" name="client_address" class="form-control" id="client_address_edit"
+                                required />
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">
@@ -601,7 +806,9 @@
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
     <script>
+        const arrProduct = [`{'id','222','2','id','222','2'}`]
         document.addEventListener("DOMContentLoaded", function () {
             // Inicializar DataTables
             $("#ventasTable").DataTable({
@@ -623,7 +830,6 @@
                     },
                 },
             });
-
             // Restringir la búsqueda para que no sea sensible a mayúsculas/minúsculas
             $.fn.dataTable.ext.type.search.string = function (data) {
                 return !data
@@ -645,8 +851,108 @@
                             .replace(/ΐ/g, "ι")
                         : data;
             };
+
         });
 
+        document.addEventListener("DOMContentLoaded", function () {
+            var data = []
+            var table2 = $('#productSaleTable').DataTable({
+                responsive: true, // Hacer la tabla responsiva
+                pageLength: 5, // Número de filas por página
+                language: {
+                    // Traducciones al español (puedes personalizarlas según tus necesidades)
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron resultados",
+                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar productos agregados:",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior",
+                    },
+                },
+
+                data: data,
+                columns: [
+                    { data: 'name' },
+                    { data: 'quantity' },
+                    { data: 'price_formated' },
+                    { data: 'discount' },
+                    { data: 'subTotal' }
+                ],
+            })
+            // Restringir la búsqueda para que no sea sensible a mayúsculas/minúsculas
+            $.fn.dataTable.ext.type.search.string = function (data) {
+                return !data
+                    ? ""
+                    : typeof data === "string"
+                        ? data
+                            .replace(/έ/g, "ε")
+                            .replace(/ύ/g, "υ")
+                            .replace(/ό/g, "ο")
+                            .replace(/ώ/g, "ω")
+                            .replace(/ά/g, "α")
+                            .replace(/ί/g, "ι")
+                            .replace(/ή/g, "η")
+                            .replace(/έ/g, "ε")
+                            .replace(/ς/g, "σ")
+                            .replace(/ϊ/g, "ι")
+                            .replace(/ΰ/g, "υ")
+                            .replace(/ϋ/g, "υ")
+                            .replace(/ΐ/g, "ι")
+                        : data;
+            };
+
+            $("#add_product_sale").on('click', function () {
+                let id = $("#id_product_select").val()
+                let quantity = $("#quantity").val();
+                let discount = $("#discount").val();
+                // arrProd.push(id)
+
+                // $('#productSaleTable').dataTable().row.add(["Tiger Nixon",
+                //     "System Architect",
+                //     "$3,120",
+                //     "2011/04/25",
+                //     "Edinburgh",
+                //     "ss"]
+
+                // ).draw(false);
+
+                // // // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
+                fetch(`/edit_product/${id}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+
+
+                        table2.row.add({
+                            id: data.id,
+                            name: data.name,
+                            price: data.price,
+                            stock: data.stock,
+                            type: data.type,
+                            variant: data.variant,
+                            measurement: data.measurement,
+                            price_formated: data.price_formated,
+                            stock_formated: data.stock_formated,
+                            quantity: quantity,
+                            discount: discount,
+                            subTotal: data.price * quantity - discount
+                        }
+                        ).draw(false);
+
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "Error al obtener los datos de la venta:",
+                            error
+                        )
+                    });
+            });
+
+        })
         document.addEventListener("DOMContentLoaded", function () {
             // Inicializar DataTables
             $("#clientsTable").DataTable({

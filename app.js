@@ -152,6 +152,62 @@ app.delete('/delete/:id', async (req, res) => {
     }
 });
 
+
+/****************************************************************** */
+/* Sales */
+/****************************************************************** */
+
+
+app.post('/add_sale', async (req, res) => {
+    try {
+        console.log(req.body)
+        const {
+            // ticket_number,
+            // products,
+            sale_date,
+            id_client_select,
+            status_sale,
+            payment_method,
+            amount_paid,
+            // amount_paid_formated,
+            seller_name,
+            total_amount,
+            total_amount_formated
+        } = req.body;
+
+        // const ticket_number = 0;
+
+        // const amount_paid_formated = new Intl.NumberFormat().format((Number(amount_paid)).toFixed(2)).replace(',', '.')
+        // const total_amount_formated = new Intl.NumberFormat().format((Number(total_amount)).toFixed(2)).replace(',', '.')
+        // Convierte los campos que contienen arreglos a arrays
+        // const cantidadProductoArr = cantidad_producto.split(',').map(Number);
+        // const skuProductoArr = sku_producto.split(',');
+        // const precioProductoArr = precio_producto.split(',').map(Number);
+        // const nombreProductoArr = nombre_producto.split(',');
+
+        const client = await pool.connect();
+        // await client.query(
+        //     `INSERT INTO flores.sale
+        //     (id, ticket_number, products, date, id_client, status, payment_method, amount_paid, amount_paid_formated, seller_name, total_amount, total_amount_formated) 
+        //     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+        //     [
+        //         uuidv4(),
+        //         ticket_number, products, sale_date, id_client, status_sale, payment_method, amount_paid, amount_paid_formated, seller_name, total_amount, total_amount_formated
+        //     ]
+        // );
+
+        client.release();
+        res.redirect('/');
+    } catch (error) {
+        console.error('Error al agregar el registro:', error);
+        res.status(500).send('Error al agregar el registro');
+    }
+});
+
+
+
+
+
 /****************************************************************** */
 /* Clients */
 /****************************************************************** */
@@ -381,9 +437,6 @@ app.delete('/delete_product/:id', async (req, res) => {
 
 
 
-/****************************************************************** */
-/* Sales */
-/****************************************************************** */
 
 
 
