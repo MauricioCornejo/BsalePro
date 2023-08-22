@@ -9,14 +9,15 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css" /> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" />
-
+    <!-- <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css" /> -->
 
 </head>
 
 <body>
-
     <!-- Tabla Ventas  -->
     <div class="container mt-5">
         <h1 class="mb-4">Tabla de Ventas</h1>
@@ -25,11 +26,12 @@
                 Registrar Venta
             </button>
         </div>
-        <table id="salesTable" class="display table table-light table-striped table-bordered ">
+        <table id="salesTable" class="display table table-dark table-striped table-bordered ">
             <thead>
                 <tr>
-                    <th></th>
+                    <!-- <th></th> -->
                     <th>Ticket</th>
+                    <th>Productos</th>
                     <th>Cliente</th>
                     <th>Fecha</th>
                     <th>Método Pago</th>
@@ -41,44 +43,47 @@
             </thead>
             <tbody>
                 <!-- <% sales.forEach(sale=> { %>
-                    <tr>
-                        <td>
-                            <%= sale.ticket_number %>
-                        </td>
-                        <td>
-                            <%= sale.products %>
-                        </td>
-                        <td>
-                            <%= sale.id_client %>
-                        </td>
-                        <td>
-                            <%= sale.date %>
-                        </td>
-                        <td>
-                            <%= sale.payment_method %>
-                        </td>
-                        <td>
-                            <%= sale.total_amount_formated %>
-                        </td>
-                        <td>
-                            <%= sale.amount_paid %>
-                        </td>
-                        <td>
-                            <%= sale.status %>
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
-                                data-bs-target="#editModal" data-id="<%= sale.id %>">Editar</a>
-                            &nbsp; &nbsp;
-                            <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal" data-id="<%= sale.id %>">Eliminar</a>
-                        </td>
-                    </tr>
-                    <% }) %> -->
+                                <tr>
+                                    <td>
+                                        <%= sale.ticket_number %>
+                                    </td>
+                                    <td>
+                                        <%= sale.products %>
+                                    </td>
+                                    <td>
+                                        <%= sale.id_client %>
+                                    </td>
+                                    <td>
+                                        <%= sale.date %>
+                                    </td>
+                                    <td>
+                                        <%= sale.payment_method %>
+                                    </td>
+                                    <td>
+                                        <%= sale.total_amount_formated %>
+                                    </td>
+                                    <td>
+                                        <%= sale.amount_paid %>
+                                    </td>
+                                    <td>
+                                        <%= sale.status %>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
+                                            data-bs-target="#editModal" data-id="<%= sale.id %>">Editar</a>
+                                        &nbsp; &nbsp;
+                                        <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal" data-id="<%= sale.id %>">Eliminar</a>
+                                    </td>
+                                </tr>
+                                <% }) %> -->
             </tbody>
         </table>
     </div>
 
+
+
+    <!-- Tabla Clientes  -->
     <div class="container mt-5">
         <h1 class="mb-4">Tabla de Clientes</h1>
         <div class="mb-3">
@@ -86,7 +91,7 @@
                 Agregar Cliente
             </button>
         </div>
-        <table id="clientsTable" class="table table-light table-striped table-bordered">
+        <table id="clientsTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -136,7 +141,7 @@
                 Agregar Producto
             </button>
         </div>
-        <table id="productsTable" class="table table-light table-striped table-bordered">
+        <table id="productsTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
                     <th>SKU</th>
@@ -187,8 +192,8 @@
     </div>
 
     <!-- Modal Agregar Producto -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -239,7 +244,7 @@
 
     <!-- Modal Agregar Cliente -->
     <div class="modal fade" id="agregarClienteModal" aria-labelledby="agregarClientteModalLabel" aria-hidden="true"
-        data-bs-target="#staticBackdrop">
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -280,10 +285,9 @@
         </div>
     </div>
 
-
     <!-- Modal Agregar venta-->
     <div class="modal fade" id="addSaleModal" tabindex="-1" aria-labelledby="addSaleModalLabel" aria-hidden="true"
-        data-bs-target="#staticBackdrop">
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -362,7 +366,7 @@
                             <div class="col-md-1 ">
                                 <label for="id_product_select">Productos: </label>
                             </div>
-                            <div class="col-md-4 ">
+                            <div class="col-md-3 ">
                                 <select class="form-select" data-live-search="true" aria-label="selectProductsSale"
                                     name="id_product_select" id="id_product_select" required>
                                     <% products.forEach(product=> { %>
@@ -391,9 +395,12 @@
                                         class="form-control" value="1" required />
                                 </div>
                             </div>
-                            <div class="col-sm-2 ">
+                            <div class="col-sm-3 ">
+                                <button class="btn btn-danger btn-sm" id="out_product_sale">
+                                    - Producto
+                                </button>
                                 <button class="btn btn-success btn-sm" id="add_product_sale">
-                                    + Agregar producto
+                                    + Producto
                                 </button>
                             </div>
                         </div>
@@ -402,7 +409,7 @@
                         <div class="row">
                             <div class="container mt-12">
                                 <div class="table-responsive">
-                                    <table id="productSaleTable" class="table table-light table-striped table-bordered">
+                                    <table id="productSaleTable" class="table table-dark table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Producto</th>
@@ -418,18 +425,7 @@
 
                             </div>
                         </div>
-                        <!-- <div class="row">
-                                <div class="col-md-1">
-                                    <button type="submit" class="btn btn-primary">
-                                        Agregar
-                                    </button>
-                                </div>
-                            </div> -->
-                        <!-- </form> -->
                         <br>
-
-
-
                     </div>
                     <div class="row">
                         <div class="col-md-12 ">
@@ -446,7 +442,7 @@
 
     <!-- Modal Delete Product -->
     <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel"
-        aria-hidden="true">
+        aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -473,10 +469,9 @@
         </div>
     </div>
 
-
     <!-- Modal Delete Client -->
     <div class="modal fade" id="deleteClientModal" tabindex="-1" aria-labelledby="deleteClientModalLabel"
-        aria-hidden="true">
+        aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -503,10 +498,9 @@
         </div>
     </div>
 
-
     <!-- Modal Editar Cliente -->
-    <div class="modal fade" id="editClientModal" tabindex="-1" aria-labelledby="editClientModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="editClientModal" tabindex="-1" aria-labelledby="editClientModalLabel" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -551,7 +545,7 @@
 
     <!-- Modal Editar Producto -->
     <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
-        aria-hidden="true">
+        aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -611,16 +605,14 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-<!-- 
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+
+    <!-- <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script> -->
 
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
-    
-
-    <script src=" https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Inicializar DataTables
@@ -628,6 +620,7 @@
                 ajax: '/sales',
                 responsive: true, // Hacer la tabla responsiva
                 pageLength: 10, // Número de filas por página
+                processing: true,
                 language: {
                     // Traducciones al español (puedes personalizarlas según tus necesidades)
                     lengthMenu: "Mostrar _MENU_ registros por página",
@@ -645,14 +638,55 @@
                 },
 
                 columns: [
-                    {
-                        className: 'dt-control',
-                        orderable: false,
-                        data: null,
-                        defaultContent: ''
-                    },
+                    // {
+                    //     className: 'dt-control',
+                    //     orderable: false,
+                    //     data: null,
+                    //     defaultContent: ''
+                    // },
                     { data: 'ticket_number' },
-                    // { data: 'products' },
+                    {
+                        data: 'products', render: function (data, type, row) {
+                            let product_list = ''
+                            // data.forEach((element, index) => {
+                            //     product_list = `${product_list}\n
+                            //         <dl>
+                            //         <dt>Producto: ${element.name} Precio: ${element.product_sale_price_formated} Cantidad: ${element.quantity} Sub Total: ${element.sub_total_formated} </dt>
+                            //         </dl>
+                            //         `
+                            // });
+                            // re
+                            // console.log(data)
+
+                            // data.forEach((element, index) => {
+                            //     product_list = `${product_list}\n
+                            //         <dl>
+                            //         <dt>${element.name}</dt>
+                            //         <dt>Precio: ${element.product_sale_price_formated} </dt>
+                            //         <dt>Cantidad: ${element.quantity}</dt>
+                            //         <dt>Sub Total: $ ${element.sub_total_formated}</dt>
+                            //         </dl>
+                            //         -------------
+                            //         `
+                            // });
+
+                            data.forEach((element, index) => {
+                                product_list = `${product_list}\n
+                                    <div class="bg-ligth border">
+                                        <dl>
+                                    <dt> ${element.name}</dt>
+                                    <dt> Precio: ${element.product_sale_price_formated} </dt>
+                                    <dt> Cantidad: ${element.quantity}</dt>
+                                    <dt> Sub Total: $ ${element.sub_total_formated}</dt>
+                                    </dl>
+                                        </div>
+                                    `
+                            });
+                            // // return data.name + ' ' + data.product_sale_price_formated;
+                            return product_list
+
+                        }
+                    },
                     { data: 'name' }, // mejorar
                     { data: 'date' },
                     { data: 'payment_method' },
@@ -666,7 +700,7 @@
                         render: DataTable.render.date()
                     }
                 ],
-                order: [[1, 'asc']]
+                order: [[1, 'desc']]
             });
             // Restringir la búsqueda para que no sea sensible a mayúsculas/minúsculas
             $.fn.dataTable.ext.type.search.string = function (data) {
@@ -692,53 +726,53 @@
 
 
             // Formatting function for row details - modify as you need
-            function format(d) {
-                // `d` is the original data object for the row
-                console.log(d)
-                let productsDetails = ``
-                d.products.forEach(element => {
-                    productsDetails = `${productsDetails}\n
-                    <dl>
-                    <dt>Producto: ${element.name}</dt>
-                    <dt>Precio: $ ${element.product_sale_price_formated} </dt>
-                    <dt>Cantidad: ${element.quantity}</dt>
-                    <dt>Sub Total: $ ${element.sub_total_formated}</dt>
-                    </dl>
-                    `
-                });
-                console.log(productsDetails)
-                return productsDetails;
-                // return (
-                //     '<dl>' +
-                //     '<dt>Full name:</dt>' +
-                //     '<dd>' +
-                //     d.date +
-                //     '</dd>' +
-                //     '<dt>Extension number:</dt>' +
-                //     '<dd>' +
-                //     d.status +
-                //     '</dd>' +
-                //     '<dt>Extra info:</dt>' +
-                //     '<dd>And any further details here (images etc)...</dd>' +
-                //     '</dl>'
-                // );
-            }
+            // function format(d) {
+            //     // `d` is the original data object for the row
+            //     console.log(d)
+            //     let productsDetails = ``
+            //     d.products.forEach(element => {
+            //         productsDetails = `${productsDetails}\n
+            //         <dl>
+            //         <dt>Producto: ${element.name}</dt>
+            //         <dt>Precio: $ ${element.product_sale_price_formated} </dt>
+            //         <dt>Cantidad: ${element.quantity}</dt>
+            //         <dt>Sub Total: $ ${element.sub_total_formated}</dt>
+            //         </dl>
+            //         `
+            //     });
+            //     console.log(productsDetails)
+            //     return productsDetails;
+            //     // return (
+            //     //     '<dl>' +
+            //     //     '<dt>Full name:</dt>' +
+            //     //     '<dd>' +
+            //     //     d.date +
+            //     //     '</dd>' +
+            //     //     '<dt>Extension number:</dt>' +
+            //     //     '<dd>' +
+            //     //     d.status +
+            //     //     '</dd>' +
+            //     //     '<dt>Extra info:</dt>' +
+            //     //     '<dd>And any further details here (images etc)...</dd>' +
+            //     //     '</dl>'
+            //     // );
+            // }
 
 
             // Add event listener for opening and closing details
-            sales_table.on('click', 'td.dt-control', function (e) {
-                let tr = e.target.closest('tr');
-                let row = sales_table.row(tr);
+            // sales_table.on('click', 'td.dt-control', function (e) {
+            //     let tr = e.target.closest('tr');
+            //     let row = sales_table.row(tr);
 
-                if (row.child.isShown()) {
-                    // This row is already open - close it
-                    row.child.hide();
-                }
-                else {
-                    // Open this row
-                    row.child(format(row.data())).show();
-                }
-            });
+            //     if (row.child.isShown()) {
+            //         // This row is already open - close it
+            //         row.child.hide();
+            //     }
+            //     else {
+            //         // Open this row
+            //         row.child(format(row.data())).show();
+            //     }
+            // });
 
         });
 
@@ -1015,8 +1049,6 @@
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-
-
             /** editar cliente modal*/
             $("#editClientModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
@@ -1069,9 +1101,6 @@
                         )
                     );
             });
-
-
-
             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
             $("#deleteClientModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
