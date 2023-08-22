@@ -25,6 +25,18 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+
+
+function formatAmount(number) {
+    // Convertir el número a formato con separadores de miles
+    const formattedNumber = number.toLocaleString('es-CL', {
+        style: 'currency',
+        currency: 'CLP'
+    });
+
+    return formattedNumber;
+}
+
 // Obtener registros de la base de datos
 app.get('/', async (req, res) => {
     try {
@@ -164,7 +176,7 @@ app.delete('/delete/:id', async (req, res) => {
 
 app.post('/add_sale', async (req, res) => {
     try {
-        console.log(req.body)
+        // console.log(req.body)
         const {
             products,
             sales_date,
@@ -175,23 +187,25 @@ app.post('/add_sale', async (req, res) => {
             // seller_name,
             total_amount,
         } = req.body;
-        const ticket_number = 0;
-        const amount_paid_formated = new Intl.NumberFormat().format((Number(amount_paid)).toFixed(2)).replace(',', '.')
-        const total_amount_formated = new Intl.NumberFormat().format((Number(total_amount)).toFixed(2)).replace(',', '.')
+        // const ticket_number = 0;
+        const amount_paid_formated = formatAmount(Number(amount_paid))
+        const total_amount_formated = formatAmount(Number(total_amount))
+
+
         // Convierte los campos que contienen arreglos a arrays
         // const cantidadProductoArr = cantidad_producto.split(',').map(Number);
         // const skuProductoArr = sku_producto.split(',');
         // const precioProductoArr = precio_producto.split(',').map(Number);
         // const nombreProductoArr = nombre_producto.split(',');
-
+        console.log("productos add sale  ===>", products);
         const client = await pool.connect();
         await client.query(
             `INSERT INTO flores.sale
-            (id, ticket_number, products, date, id_client, status, payment_method, amount_paid, amount_paid_formated, seller_name, total_amount, total_amount_formated) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+            (id, products, date, id_client, status, payment_method, amount_paid, amount_paid_formated, seller_name, total_amount, total_amount_formated) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
             [
                 uuidv4(),
-                ticket_number,
+                // ticket_number,
                 products,
                 sales_date,
                 id_client_select,
@@ -212,6 +226,26 @@ app.post('/add_sale', async (req, res) => {
         res.status(500).send('Error al agregar el registro');
     }
 });
+
+// Editar un registro (Mostrar modal de editar)
+app.get('/sales', async (req, res) => {
+    try {
+        console.log("******************* LLEGUE AL get Sales")
+        // const { id } = req.params;
+        const client = await pool.connect();
+        // const resultSearch = await client.query('SELECT id, ticket_number, products, date, id_client, status, payment_method, amount_paid, amount_paid_formated, seller_name, total_amount, total_amount_formated FROM flores.sale');
+
+        const resultSearch = await client.query('SELECT  * FROM flores.sale s JOIN flores.client c ON s.id_client = c.id ');
+        const salesSearch = resultSearch.rows;
+        client.release();
+        // console.log('resultSearch sales:', salesSearch);
+        res.json({ data: salesSearch }); // Responder con el objeto venta en formato JSON
+    } catch (error) {
+        console.error('Error al obtener el registro:', error);
+        res.status(500).json({ error: 'Error al obtener el registro' }); // Responder con un objeto JSON en caso de error
+    }
+});
+
 
 
 
@@ -339,31 +373,31 @@ app.post('/add_product', async (req, res) => {
         const {
             sku_product,
             name_product,
-            price_product,
+            cost_product,
             type_product,
             stock,
             variant,
             measurement
         } = req.body;
-        const price_formated = new Intl.NumberFormat().format((Number(price_product)).toFixed(2)).replace(',', '.')
+        const cost_formated = new Intl.NumberFormat().format((Number(cost_product)).toFixed(2)).replace(',', '.')
         const stock_formated = new Intl.NumberFormat().format((Number(stock)).toFixed(2)).replace(',', '.')
         console.log("AGREGAR PRODUCTO", req.body)
         const client = await pool.connect();
         await client.query(
             `INSERT INTO flores.product 
-            ( id, sku, name, price, stock, type, variant, measurement, is_active, price_formated, stock_formated) 
+            ( id, sku, name, cost, stock, type, variant, measurement, is_active, cost_formated, stock_formated) 
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
             [
                 uuidv4(),
                 sku_product,
                 name_product,
-                price_product,
+                cost_product,
                 stock,
                 type_product,
                 variant,
                 measurement,
                 true,
-                price_formated,
+                cost_formated,
                 stock_formated
             ]
         );
@@ -399,26 +433,26 @@ app.post('/edit_product/:id', async (req, res) => {
         const { id } = req.params;
         const { sku_product,
             name_product,
-            price_product,
+            cost_product,
             type_product,
             stock,
             variant,
             measurement
         } = req.body;
-        const price_formated = new Intl.NumberFormat().format((Number(price_product)).toFixed(2)).replace(',', '.')
+        const cost_formated = new Intl.NumberFormat().format((Number(cost_product)).toFixed(2)).replace(',', '.')
         const stock_formated = new Intl.NumberFormat().format((Number(stock)).toFixed(2)).replace(',', '.')
         console.log("*****************LLEGUE AL POST EDITAR ************************************")
         const client = await pool.connect();
         await client.query(
-            `UPDATE flores.product SET sku = $1, name = $2, price = $3, type = $4, stock = $5, variant = $6, measurement = $7, price_formated = $8, stock_formated = $9 WHERE id = $10`,
+            `UPDATE flores.product SET sku = $1, name = $2, cost = $3, type = $4, stock = $5, variant = $6, measurement = $7, cost_formated = $8, stock_formated = $9 WHERE id = $10`,
             [sku_product,
                 name_product,
-                price_product,
+                cost_product,
                 type_product,
                 stock,
                 variant,
                 measurement,
-                price_formated,
+                cost_formated,
                 stock_formated,
                 id]
         );

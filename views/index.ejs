@@ -7,109 +7,40 @@
     <title>Flores</title>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css" /> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" />
+
+
 </head>
 
 <body>
-    <!-- <div class="container mt-5">
-        <h1 class="mb-4">Tabla de Ventas</h1>
-        <div class="mb-3">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarModal">
-                Agregar Venta
-            </button>
-        </div>
-        <div class="mb-3">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSaleModal">
-                addSaleModal
-            </button>
-        </div>
-        <table id="ventasTable" class="table table-dark table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>SKU</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Total</th>
-                    <th>Fecha</th>
-                    <th>Método Pago</th>
-                    <th>Producto</th>
-                    <th>Cliente</th>
-                    <th>Resto Venta</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% data.forEach(venta=> { %>
-                    <tr>
-                        <td>
-                            <%= venta.sku_producto %>
-                        </td>
-                        <td>
-                            <%= venta.cantidad_producto %>
-                        </td>
-                        <td>
-                            <%= venta.precio_producto %>
-                        </td>
-                        <td>
-                            <%= venta.total %>
-                        </td>
-                        <td>
-                            <%= venta.fecha_venta %>
-                        </td>
-                        <td>
-                            <%= venta.metodo_pago %>
-                        </td>
-                        <td>
-                            <%= venta.nombre_producto %>
-                        </td>
-                        <td>
-                            <%= venta.nombre_cliente %>
-                        </td>
-                        <td>
-                            <%= venta.resto_venta %>
-                        </td>
-                        <td>
-                            <%= venta.estado %>
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
-                                data-bs-target="#editModal" data-id="<%= venta.id %>">Editar</a>
-                            &nbsp; &nbsp;
-                            <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal" data-id="<%= venta.id %>">Eliminar</a>
-                        </td>
-                    </tr>
-                    <% }) %>
-            </tbody>
-        </table>
-    </div> -->
 
     <!-- Tabla Ventas  -->
     <div class="container mt-5">
         <h1 class="mb-4">Tabla de Ventas</h1>
         <div class="mb-3">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSaleModal">
-                Agregar Venta
+                Registrar Venta
             </button>
         </div>
-        <table id="salesTable" class="table table-dark table-striped table-bordered">
+        <table id="salesTable" class="display table table-light table-striped table-bordered ">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Ticket</th>
-                    <th>Productos</th>
                     <th>Cliente</th>
                     <th>Fecha</th>
                     <th>Método Pago</th>
                     <th>Total</th>
                     <th>Monto Pagado</th>
                     <th>Estado</th>
-                    <th>Acciones</th>
+                    <!-- <th>Acciones</th> -->
                 </tr>
             </thead>
             <tbody>
-                <% sales.forEach(sale =>  { %>
+                <!-- <% sales.forEach(sale=> { %>
                     <tr>
                         <td>
                             <%= sale.ticket_number %>
@@ -118,7 +49,7 @@
                             <%= sale.products %>
                         </td>
                         <td>
-                            <%= sale.id_client %> 
+                            <%= sale.id_client %>
                         </td>
                         <td>
                             <%= sale.date %>
@@ -142,14 +73,11 @@
                             <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
                                 data-bs-target="#deleteModal" data-id="<%= sale.id %>">Eliminar</a>
                         </td>
-
                     </tr>
-                    <% }) %>
+                    <% }) %> -->
             </tbody>
         </table>
     </div>
-
-
 
     <div class="container mt-5">
         <h1 class="mb-4">Tabla de Clientes</h1>
@@ -158,7 +86,7 @@
                 Agregar Cliente
             </button>
         </div>
-        <table id="clientsTable" class="table table-dark table-striped table-bordered">
+        <table id="clientsTable" class="table table-light table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -208,12 +136,12 @@
                 Agregar Producto
             </button>
         </div>
-        <table id="productsTable" class="table table-dark table-striped table-bordered">
+        <table id="productsTable" class="table table-light table-striped table-bordered">
             <thead>
                 <tr>
                     <th>SKU</th>
                     <th>Nombre</th>
-                    <th>Precio</th>
+                    <th>Costo</th>
                     <th>Stock</th>
                     <th>Tipo</th>
                     <th>Varante</th>
@@ -231,7 +159,7 @@
                             <%= product.name %>
                         </td>
                         <td>
-                            <%= product.price_formated %>
+                            <%= product.cost_formated %>
                         </td>
                         <td>
                             <%= product.stock_formated %>
@@ -284,8 +212,8 @@
                             <input type="text" name="measurement" class="form-control" required />
                         </div>
                         <div class="form-group">
-                            <label for="price_product">Precio: </label>
-                            <input type="number" name="price_product" class="form-control" required />
+                            <label for="cost_product">Costo: </label>
+                            <input type="number" name="cost_product" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="type_product">Tipo:</label>
@@ -310,7 +238,8 @@
     </div>
 
     <!-- Modal Agregar Cliente -->
-    <div class="modal fade" id="agregarClienteModal" aria-labelledby="agregarClientteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="agregarClienteModal" aria-labelledby="agregarClientteModalLabel" aria-hidden="true"
+        data-bs-target="#staticBackdrop">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -351,115 +280,6 @@
         </div>
     </div>
 
-    <!-- Modal Agregar -->
-    <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="agregarModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="agregarModalLabel">
-                        Agregar Venta
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-
-                    <form action="/add" method="post">
-                        <div class="form-group">
-                            <label for="cantidad_producto">Cantidad</label>
-                            <input type="number" name="cantidad_producto" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="sku_producto">SKU</label>
-                            <input type="text" name="sku_producto" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="id_cliente">ID Cliente</label>
-                            <input type="text" name="id_cliente" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="precio_producto">Precio Unitario</label>
-                            <input type="text" name="precio_producto" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="total">Total</label>
-                            <input type="number" name="total" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="fecha_venta">Fecha Venta</label>
-                            <input type="date" name="fecha_venta" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="metodo_pago">Método de Pago</label>
-                            <input type="text" name="metodo_pago" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre_producto">Nombre Producto</label>
-                            <input type="text" name="nombre_producto" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre_cliente">Nombre Cliente</label>
-                            <input type="text" name="nombre_cliente" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="resto_venta">Resto Venta</label>
-                            <input type="number" name="resto_venta" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="estado">Estado</label>
-                            <input type="text" name="estado" class="form-control" required />
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">
-                            Agregar
-                        </button>
-                    </form>
-                    <table id="produTable" class="table table-dark table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Cantidad</th>
-                                <th>Precio Unitario</th>
-                                <th>Descuento</th>
-                                <th>Sub Total</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- <% clients.forEach(client=> { %> 
-                            <tr>
-                                <td>
-                                    <%= client.name %>
-                                </td>
-                                <td>
-                                     <%= client.rut %> 
-                                </td>
-                                <td>
-                                    <%= client.email %> 
-                                </td>
-                                <td>
-                                   <%= client.cell_phone %> 
-                                </td>
-                                <td>
-                                     <%= client.address %> 
-                                </td>
-                                <td>
-                                   <%= client.address %> 
-                                </td>
-                               <td>
-                                        <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
-                                            data-bs-target="#editClientModal" data-id="<%= client.id %>">Editar</a>
-                                        &nbsp; &nbsp;
-                                        <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
-                                            data-bs-target="#deleteClientModal" data-id="<%= client.id %>">Eliminar</a>
-                                    </td> 
-                            </tr> 
-                             <% }) %> -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal Agregar venta-->
     <div class="modal fade" id="addSaleModal" tabindex="-1" aria-labelledby="addSaleModalLabel" aria-hidden="true"
@@ -474,213 +294,151 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form action="/add_sale" method="post">
-                            <div class="row">
-                                <div class="col-md-1 ">
-                                    <label for="id_client_select">Cliente: </label>
-                                </div>
-                                <div class="col-md-5 ">
-                                    <div class="form-group">
-                                        <select class="form-select" data-live-search="true"
-                                            aria-label="selectClientSale" name="id_client_select" id="id_client_select" required>
-                                            <% clients.forEach(client=> { %>
-                                                <option value=<%=client.id %>><%= client.name %>
-                                                </option>
-                                                <% }) %>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 " style="align-content: end;">
-                                    <label for="sale_date">Fecha Venta:</label>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <input type="date" name="sale_date" id="sale_date" class="form-control" required />
-                                    </div>
-                                    <!-- <input type="date" name="fecha_venta" class="form-control" required /> -->
-                                </div>
+                        <!-- <form action="/add_sale" method="post"> -->
+                        <div class="row">
+                            <div class="col-md-1 ">
+                                <label for="id_client_select">Cliente: </label>
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-2 ">
-                                    <label for="payment_method">Método de Pago: </label>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <input type="text" name="payment_method" id="payment_method" class="form-control" required />
-                                    </div>
-                                </div>
-                                <div class="col-md-2 ">
-                                    <label for="amount_paid">Monto Pagado: </label>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <input type="number" name="amount_paid" id="amount_paid" class="form-control" required />
-                                    </div>
-                                </div>
-
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-2 ">
-                                    <label for="status_sale">Estado: </label>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <input type="text" name="status_sale" id="status_sale" class="form-control" required />
-                                    </div>
-                                </div>
-                                <br>
-                                <br>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-1 ">
-                                    <label for="id_product_select">Productos: </label>
-                                </div>
-                                <div class="col-md-4 ">
-                                    <select class="form-select" data-live-search="true" aria-label="selectProductsSale"
-                                        name="id_product_select" id="id_product_select" required>
-                                        <% products.forEach(product=> { %>
-                                            <option value="<%= product.id %>">
-                                                <%= product.name %>, Precio: $<%= product.price_formated %>
+                            <div class="col-md-5 ">
+                                <div class="form-group">
+                                    <select class="form-select" data-live-search="true" aria-label="selectClientSale"
+                                        name="id_client_select" id="id_client_select" required>
+                                        <% clients.forEach(client=> { %>
+                                            <option value=<%=client.id %>><%= client.name %>
                                             </option>
                                             <% }) %>
                                     </select>
                                 </div>
-                                <div class="col-md-1 ">
-                                    <label for="quantity">Cantidad:</label>
+                            </div>
+                            <div class="col-md-2 " style="align-content: end;">
+                                <label for="sale_date">Fecha Venta:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="date" name="sale_date" id="sale_date" class="form-control" required />
                                 </div>
-                                <div class="col-md-1 ">
-                                    <div class="form-group">
-                                        <input type="number" min="1" value="1" name="quantity" class="form-control"
-                                            id="quantity" required />
-                                    </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-2 ">
+                                <label for="payment_method">Método de Pago: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="text" name="payment_method" id="payment_method" class="form-control"
+                                        required />
                                 </div>
+                            </div>
+                            <div class="col-md-2 ">
+                                <label for="amount_paid">Monto Pagado: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="number" name="amount_paid" id="amount_paid" class="form-control"
+                                        required />
+                                </div>
+                            </div>
 
-                                <div class="col-md-1 ">
-                                    <label for="quantity">Descuento:</label>
-                                </div>
-                                <div class="col-md-2 ">
-                                    <div class="form-group">
-                                        <input type="number" min="0" name="discount" id="discount" class="form-control"
-                                            value="0" required />
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 ">
-                                    <button class="btn btn-primary btn-sm" id="add_product_sale">
-                                        Agregar Producto
-                                    </button>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-2 ">
+                                <label for="status_sale">Estado: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input type="text" name="status_sale" id="status_sale" class="form-control"
+                                        required />
                                 </div>
                             </div>
                             <br>
                             <br>
-                            <div class="row">
-                                <div class="container mt-12">
-                                    <table id="productSaleTable" class="table table-dark table-striped table-bordered">
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-1 ">
+                                <label for="id_product_select">Productos: </label>
+                            </div>
+                            <div class="col-md-4 ">
+                                <select class="form-select" data-live-search="true" aria-label="selectProductsSale"
+                                    name="id_product_select" id="id_product_select" required>
+                                    <% products.forEach(product=> { %>
+                                        <option value="<%= product.id %>">
+                                            <%= product.name %>%>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                            </div>
+                            <div class="col-md-1 ">
+                                <label for="quantity">Cantidad:</label>
+                            </div>
+                            <div class="col-md-1 ">
+                                <div class="form-group">
+                                    <input type="number" min="1" value="1" name="quantity" class="form-control"
+                                        id="quantity" required />
+                                </div>
+                            </div>
+
+                            <div class="col-md-1 ">
+                                <label for="quantity">Precio:</label>
+                            </div>
+                            <div class="col-md-2 ">
+                                <div class="form-group">
+                                    <input type="number" min="1" name="product_sale_price" id="product_sale_price"
+                                        class="form-control" value="1" required />
+                                </div>
+                            </div>
+                            <div class="col-sm-2 ">
+                                <button class="btn btn-success btn-sm" id="add_product_sale">
+                                    + Agregar producto
+                                </button>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="container mt-12">
+                                <div class="table-responsive">
+                                    <table id="productSaleTable" class="table table-light table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Nombre</th>
+                                                <th>Producto</th>
                                                 <th>Cantidad</th>
                                                 <th>Precio Unitario</th>
-                                                <th>Descuento</th>
                                                 <th>Sub Total</th>
-                                                <!-- <th>Acciones</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
                                         </tbody>
                                     </table>
                                 </div>
+
                             </div>
-                            <!-- <div class="row">
+                        </div>
+                        <!-- <div class="row">
                                 <div class="col-md-1">
                                     <button type="submit" class="btn btn-primary">
                                         Agregar
                                     </button>
                                 </div>
                             </div> -->
-                        </form>
+                        <!-- </form> -->
                         <br>
 
 
 
                     </div>
                     <div class="row">
-                        <button class="btn btn-primary" id="button_add_product_sale">
-                            Agregar venta
-                        </button>
-
+                        <div class="col-md-12 ">
+                            <button class="btn btn-primary" id="button_add_product_sale">
+                                Agregar venta
+                            </button>
+                        </div>
                     </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <!-- Modal Editar -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">
-                        Editar Venta
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editForm" method="post">
-                        <div class="form-group">
-                            <label for="cantidad_producto">Cantidad</label>
-                            <input type="text" name="cantidad_producto" class="form-control" id="cantidad_producto" />
-                        </div>
-                        <div class="form-group">
-                            <label for="sku_producto">SKU</label>
-                            <input type="text" name="sku_producto" class="form-control" id="sku_producto" />
-                        </div>
-                        <div class="form-group">
-                            <label for="id_cliente">ID Cliente</label>
-                            <input type="text" name="id_cliente" class="form-control" id="id_cliente" />
-                        </div>
-                        <div class="form-group">
-                            <label for="precio_producto">Precio Unitario</label>
-                            <input type="text" name="precio_producto" class="form-control" id="precio_producto" />
-                        </div>
-                        <div class="form-group">
-                            <label for="total">Total</label>
-                            <input type="number" name="total" class="form-control" id="total" />
-                        </div>
-                        <div class="form-group">
-                            <label for="fecha_venta">Fecha Venta</label>
-                            <input type="date" name="sale_date" class="form-control" id="sale_date" />
-                        </div>
-                        <div class="form-group">
-                            <label for="metodo_pago">Método de Pago</label>
-                            <input type="text" name="metodo_pago" class="form-control" id="metodo_pago" />
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre_producto">Nombre Producto</label>
-                            <input type="text" name="nombre_producto" class="form-control" id="nombre_producto" />
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre_cliente">Nombre Cliente</label>
-                            <input type="text" name="nombre_cliente" class="form-control" id="nombre_cliente" />
-                        </div>
-                        <div class="form-group">
-                            <label for="resto_venta">Resto Venta</label>
-                            <input type="number" name="resto_venta" class="form-control" id="resto_venta" />
-                        </div>
-                        <div class="form-group">
-                            <label for="status_sale">Estado</label>
-                            <input type="text" name="status_sale" class="form-control" id="status_sale" />
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">
-                            Guardar Cambios
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -745,32 +503,7 @@
         </div>
     </div>
 
-    <!-- Modal Eliminar -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">
-                        Eliminar Venta
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Está seguro de que desea eliminar esta venta?</p>
-                </div>
-                <div class="modal-footer">
-                    <form id="deleteForm" method="post" action="">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                            Cancelar
-                        </button>
-                        <button type="submit" class="btn btn-danger">
-                            Eliminar
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- Modal Editar Cliente -->
     <div class="modal fade" id="editClientModal" tabindex="-1" aria-labelledby="editClientModalLabel"
         aria-hidden="true">
@@ -843,8 +576,8 @@
                             <input type="text" name="measurement" class="form-control" id="measurement_edit" required />
                         </div>
                         <div class="form-group">
-                            <label for="price_product">Precio: &nbsp; &nbsp; </label>
-                            <input type="number" name="price_product" class="form-control" id="price_product_edit"
+                            <label for="cost_product">Costo: &nbsp; &nbsp; </label>
+                            <input type="number" name="cost_product" class="form-control" id="cost_product_edit"
                                 required />
                         </div>
                         <div class="form-group">
@@ -870,25 +603,36 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- 
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script> -->
+
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+
+    
+
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script>
-        const arrProduct = [`{'id','222','2','id','222','2'}`]
         document.addEventListener("DOMContentLoaded", function () {
             // Inicializar DataTables
-            $("#ventasTable").DataTable({
+            let sales_table = new DataTable('#salesTable', {
+                ajax: '/sales',
                 responsive: true, // Hacer la tabla responsiva
                 pageLength: 10, // Número de filas por página
                 language: {
                     // Traducciones al español (puedes personalizarlas según tus necesidades)
                     lengthMenu: "Mostrar _MENU_ registros por página",
                     zeroRecords: "No se encontraron resultados",
-                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    info: " Página _PAGE_ de _PAGES_",
                     infoEmpty: "No hay registros disponibles",
                     infoFiltered: "(filtrado de _MAX_ registros totales)",
                     search: "Buscar Ventas:",
@@ -899,6 +643,30 @@
                         previous: "Anterior",
                     },
                 },
+
+                columns: [
+                    {
+                        className: 'dt-control',
+                        orderable: false,
+                        data: null,
+                        defaultContent: ''
+                    },
+                    { data: 'ticket_number' },
+                    // { data: 'products' },
+                    { data: 'name' }, // mejorar
+                    { data: 'date' },
+                    { data: 'payment_method' },
+                    { data: 'total_amount_formated' },
+                    { data: 'amount_paid_formated' },
+                    { data: 'status' }
+                ],
+                columnDefs: [
+                    {
+                        targets: 3,
+                        render: DataTable.render.date()
+                    }
+                ],
+                order: [[1, 'asc']]
             });
             // Restringir la búsqueda para que no sea sensible a mayúsculas/minúsculas
             $.fn.dataTable.ext.type.search.string = function (data) {
@@ -922,6 +690,56 @@
                         : data;
             };
 
+
+            // Formatting function for row details - modify as you need
+            function format(d) {
+                // `d` is the original data object for the row
+                console.log(d)
+                let productsDetails = ``
+                d.products.forEach(element => {
+                    productsDetails = `${productsDetails}\n
+                    <dl>
+                    <dt>Producto: ${element.name}</dt>
+                    <dt>Precio: $ ${element.product_sale_price_formated} </dt>
+                    <dt>Cantidad: ${element.quantity}</dt>
+                    <dt>Sub Total: $ ${element.sub_total_formated}</dt>
+                    </dl>
+                    `
+                });
+                console.log(productsDetails)
+                return productsDetails;
+                // return (
+                //     '<dl>' +
+                //     '<dt>Full name:</dt>' +
+                //     '<dd>' +
+                //     d.date +
+                //     '</dd>' +
+                //     '<dt>Extension number:</dt>' +
+                //     '<dd>' +
+                //     d.status +
+                //     '</dd>' +
+                //     '<dt>Extra info:</dt>' +
+                //     '<dd>And any further details here (images etc)...</dd>' +
+                //     '</dl>'
+                // );
+            }
+
+
+            // Add event listener for opening and closing details
+            sales_table.on('click', 'td.dt-control', function (e) {
+                let tr = e.target.closest('tr');
+                let row = sales_table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                }
+            });
+
         });
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -929,15 +747,15 @@
             let total_amount_product = 0
             var table2 = $('#productSaleTable').DataTable({
                 responsive: true, // Hacer la tabla responsiva
-                pageLength: 5, // Número de filas por página
+                pageLength: 10, // Número de filas por página
                 language: {
                     // Traducciones al español (puedes personalizarlas según tus necesidades)
+                    search: "Buscar productos agregados:",
                     lengthMenu: "Mostrar _MENU_ registros por página",
                     zeroRecords: "No se encontraron resultados",
-                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    info: " Página _PAGE_ de _PAGES_",
                     infoEmpty: "No hay registros disponibles",
                     infoFiltered: "(filtrado de _MAX_ registros totales)",
-                    search: "Buscar productos agregados:",
                     paginate: {
                         first: "Primero",
                         last: "Último",
@@ -945,16 +763,15 @@
                         previous: "Anterior",
                     },
                 },
-
                 data: data,
                 columns: [
                     { data: 'name' },
                     { data: 'quantity' },
-                    { data: 'price_formated' },
-                    { data: 'discount' },
-                    { data: 'subTotal' }
+                    { data: 'product_sale_price_formated' },
+                    { data: 'sub_total_formated' }
                 ],
             })
+
             // Restringir la búsqueda para que no sea sensible a mayúsculas/minúsculas
             $.fn.dataTable.ext.type.search.string = function (data) {
                 return !data
@@ -977,10 +794,27 @@
                         : data;
             };
 
+            function formatAmount(number) {
+                // Convertir el número a formato con separadores de miles
+                const formattedNumber = number.toLocaleString('es-CL', {
+                    style: 'currency',
+                    currency: 'CLP'
+                });
+
+                return formattedNumber;
+            }
+
             $("#add_product_sale").on('click', function () {
                 let id = $("#id_product_select").val()
                 let quantity = $("#quantity").val();
-                let discount = $("#discount").val();
+                let product_sale_price = $("#product_sale_price").val();
+                let product_sale_price_formated = formatAmount(Number(product_sale_price));
+
+
+
+                let sub_total = product_sale_price * quantity;
+                let sub_total_formated = formatAmount(Number(sub_total));
+                console.log(sub_total_formated);
                 // // // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
                 fetch(`/edit_product/${id}`)
                     .then((response) => response.json())
@@ -988,20 +822,22 @@
                         const rowToAdd = {
                             id: dataProduct.id,
                             name: dataProduct.name,
-                            price: dataProduct.price,
+                            cost: dataProduct.cost,
                             stock: dataProduct.stock,
                             type: dataProduct.type,
                             variant: dataProduct.variant,
                             measurement: dataProduct.measurement,
-                            price_formated: dataProduct.price_formated,
+                            product_sale_price: product_sale_price,
+                            product_sale_price_formated: product_sale_price_formated,
                             stock_formated: dataProduct.stock_formated,
                             quantity: quantity,
-                            discount: discount,
-                            subTotal: dataProduct.price * quantity - discount
+                            subTotal: sub_total,
+                            sub_total_formated: sub_total_formated
                         }
                         total_amount_product += rowToAdd.subTotal;
                         data.push(rowToAdd)
                         table2.row.add(rowToAdd).draw(false);
+                        // $('#productSaleTable').row.add(rowToAdd).draw(false);
                         console.log(data)
                         // console.log(dataProduct)
                     })
@@ -1021,6 +857,30 @@
                 let amount_paid_sale = $("#amount_paid").val();
                 let total_amount = total_amount_product;
 
+                if (client === '' || client === null || client === undefined) {
+                    alert('Debes seleccionar un cliente')
+                    return;
+                }
+
+                if (sales_date === '' || sales_date === null || sales_date === undefined) {
+                    alert('Debes seleccionar una fecha')
+                    return;
+                }
+
+                if (payment_method === '' || payment_method === null || payment_method === undefined) {
+                    alert('Debes ingresar un medio de pago')
+                    return;
+                }
+
+                if (amount_paid_sale === '' || amount_paid_sale === null || amount_paid_sale === undefined) {
+                    alert('Debes ingresar un monto pagado')
+                    return;
+                }
+
+                if (data.length === 0) {
+                    alert('Debes agregar productos ')
+                    return;
+                };
                 let auxProduct = {
                     products: data,
                     sales_date: sales_date,
@@ -1030,7 +890,7 @@
                     total_amount: total_amount,
                     amount_paid: amount_paid_sale,
 
-                }
+                };
                 console.log("auxProduct", auxProduct)
                 try {
                     const response = await $.ajax({
@@ -1046,7 +906,7 @@
                         // Mostrar algún mensaje de confirmación al usuario si lo deseas
                     } else {
                         console.error(
-                            "Error al eliminar el registro:",
+                            "Error al crear la venta:",
                             response.message
                         );
                         alert("Error al eliminar el registro");
@@ -1073,7 +933,7 @@
                     // Traducciones al español (puedes personalizarlas según tus necesidades)
                     lengthMenu: "Mostrar _MENU_ registros por página",
                     zeroRecords: "No se encontraron resultados",
-                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    info: " Página _PAGE_ de _PAGES_",
                     infoEmpty: "No hay registros disponibles",
                     infoFiltered: "(filtrado de _MAX_ registros totales)",
                     search: "Buscar Cliente:",
@@ -1118,7 +978,7 @@
                     // Traducciones al español (puedes personalizarlas según tus necesidades)
                     lengthMenu: "Mostrar _MENU_ registros por página",
                     zeroRecords: "No se encontraron resultados",
-                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    info: " Página _PAGE_ de _PAGES_",
                     infoEmpty: "No hay registros disponibles",
                     infoFiltered: "(filtrado de _MAX_ registros totales)",
                     search: "Buscar Producto:",
@@ -1155,41 +1015,7 @@
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-            // Obtener el formulario de edición cuando se muestra el modal editar
-            $("#editModal").on("show.bs.modal", function (event) {
-                const button = $(event.relatedTarget); // Botón que activó el modal
-                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
-                const form = document.getElementById("editForm");
-                form.action = `/edit/${id}`; // Actualizar el atributo 'action' del formulario
-                console.log("el id", id)
-                // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
-                fetch(`/edit/${id}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        form.elements.cantidad_producto.value =
-                            data.cantidad_producto;
-                        form.elements.sku_producto.value =
-                            data.sku_producto;
-                        form.elements.id_cliente.value = data.id_cliente;
-                        form.elements.precio_producto.value =
-                            data.precio_producto;
-                        form.elements.total.value = data.total;
-                        form.elements.fecha_venta.value = data.fecha_venta;
-                        form.elements.metodo_pago.value = data.metodo_pago;
-                        form.elements.nombre_producto.value =
-                            data.nombre_producto;
-                        form.elements.nombre_cliente.value =
-                            data.nombre_cliente;
-                        form.elements.resto_venta.value = data.resto_venta;
-                        form.elements.estado.value = data.estado;
-                    })
-                    .catch((error) =>
-                        console.error(
-                            "Error al obtener los datos de la venta:",
-                            error
-                        )
-                    );
-            });
+
 
             /** editar cliente modal*/
             $("#editClientModal").on("show.bs.modal", function (event) {
@@ -1231,7 +1057,7 @@
                         form.elements.name_product_edit.value = data.name;
                         form.elements.sku_product.value = data.sku;
                         form.elements.measurement_edit.value = data.measurement;
-                        form.elements.price_product_edit.value = data.price;
+                        form.elements.cost_product_edit.value = data.cost;
                         form.elements.type_product_edit.value = data.type;
                         form.elements.variant_edit.value = data.variant;
                         form.elements.stock_edit.value = data.stock;
@@ -1244,14 +1070,7 @@
                     );
             });
 
-            // Obtener el formulario de eliminación cuando se muestra el modal eliminar
-            $("#deleteModal").on("show.bs.modal", function (event) {
-                const button = $(event.relatedTarget); // Botón que activó el modal
-                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
-                console.log("ID del registro a eliminar:", id);
-                const form = document.getElementById("deleteForm");
-                form.action = `/delete/${id}`; // Actualizar el atributo 'action' del formulario
-            });
+
 
             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
             $("#deleteClientModal").on("show.bs.modal", function (event) {
@@ -1271,42 +1090,6 @@
                 const form = document.getElementById("deleteFormProduct");
                 form.action = `/delete_product/${id}`; // Actualizar el atributo 'action' del formulario
                 console.log(form.action)
-            });
-
-            // Eliminar el registro al enviar el formulario
-            $("#deleteForm").on("submit", async function (event) {
-                event.preventDefault();
-                const url = this.action;
-                console.log("URL de la solicitud DELETE:", url);
-                // Realizar la solicitud de eliminación mediante AJAX
-                try {
-                    const response = await $.ajax({
-                        type: "DELETE",
-                        url: url,
-                        dataType: "json",
-                    });
-
-                    if (response.success) {
-                        console.log("Registro eliminado exitosamente.");
-                        // location.reload();
-                        // Mostrar algún mensaje de confirmación al usuario si lo deseas
-                    } else {
-                        console.error(
-                            "Error al eliminar el registro:",
-                            response.message
-                        );
-                        alert("Error al eliminar el registro");
-                    }
-                    // Actualizar la tabla después de eliminar el registro
-                    // $('#ventasTable').DataTable().ajax.reload(null, false);
-                } catch (error) {
-                    console.error(
-                        "Error al eliminar el registro:",
-                        error.stack
-                    );
-                    console.log(error);
-                    alert("Error al eliminar el registro");
-                }
             });
 
             // Eliminar el registro al enviar el formulario
