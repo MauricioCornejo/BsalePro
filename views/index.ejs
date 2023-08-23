@@ -38,7 +38,7 @@
                     <th>Total</th>
                     <th>Monto Pagado</th>
                     <th>Estado</th>
-                    <!-- <th>Acciones</th> -->
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -440,6 +440,36 @@
         </div>
     </div>
 
+    <!-- Modal Delete Sale -->
+    <div class="modal fade" id="deleteSaleModal" tabindex="-1" aria-labelledby="deleteSaleModalLabel"
+        aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteSaleModalLabel">
+                        Eliminar Cliente
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de que desea eliminar la venta ?</p>
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteFormSale" method="post" action>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        &nbsp;
+                        <button type="submit" class="btn btn-success">
+                            Confirmar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Modal Delete Product -->
     <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel"
         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -638,37 +668,10 @@
                 },
 
                 columns: [
-                    // {
-                    //     className: 'dt-control',
-                    //     orderable: false,
-                    //     data: null,
-                    //     defaultContent: ''
-                    // },
                     { data: 'ticket_number' },
                     {
                         data: 'products', render: function (data, type, row) {
                             let product_list = ''
-                            // data.forEach((element, index) => {
-                            //     product_list = `${product_list}\n
-                            //         <dl>
-                            //         <dt>Producto: ${element.name} Precio: ${element.product_sale_price_formated} Cantidad: ${element.quantity} Sub Total: ${element.sub_total_formated} </dt>
-                            //         </dl>
-                            //         `
-                            // });
-                            // re
-                            // console.log(data)
-
-                            // data.forEach((element, index) => {
-                            //     product_list = `${product_list}\n
-                            //         <dl>
-                            //         <dt>${element.name}</dt>
-                            //         <dt>Precio: ${element.product_sale_price_formated} </dt>
-                            //         <dt>Cantidad: ${element.quantity}</dt>
-                            //         <dt>Sub Total: $ ${element.sub_total_formated}</dt>
-                            //         </dl>
-                            //         -------------
-                            //         `
-                            // });
 
                             data.forEach((element, index) => {
                                 product_list = `${product_list}\n
@@ -682,17 +685,28 @@
                                         </div>
                                     `
                             });
-                            // // return data.name + ' ' + data.product_sale_price_formated;
                             return product_list
 
                         }
                     },
-                    { data: 'name' }, // mejorar
+                    { data: 'name' },
                     { data: 'date' },
                     { data: 'payment_method' },
                     { data: 'total_amount_formated' },
                     { data: 'amount_paid_formated' },
-                    { data: 'status' }
+                    { data: 'status' },
+                    {
+                        data: 'id', render: function (data, type, row) {
+                            console.log(row)
+
+                            return `  <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
+                                data-bs-target="#editClientModal" data-id="<%= data %>">Editar</a>
+                            &nbsp; &nbsp;
+                            <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteSaleModal" data-id="${row.id}">Eliminar</a>
+                        `
+                        }
+                    }
                 ],
                 columnDefs: [
                     {
@@ -1101,6 +1115,19 @@
                         )
                     );
             });
+
+             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
+             $("#deleteSaleModal").on("show.bs.modal", function (event) {
+                const button = $(event.relatedTarget); // Botón que activó el modal
+                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
+                console.log("ID del registro a eliminar:", id);
+                const form = document.getElementById("deleteFormSale");
+                form.action = `/delete_sale/${id}`; // Actualizar el atributo 'action' del formulario
+                console.log(form.action)
+            });
+
+
+
             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
             $("#deleteClientModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
@@ -1159,6 +1186,41 @@
 
             // Eliminar el registro al enviar el formulario
             $("#deleteFormProduct").on("submit", async function (event) {
+                event.preventDefault();
+                const url = this.action;
+                console.log("URL de la solicitud DELETE:", url);
+                // Realizar la solicitud de eliminación mediante AJAX
+                try {
+                    const response = await $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        dataType: "json",
+                    });
+
+                    if (response.success) {
+                        console.log("Registro eliminado exitosamente.");
+                        location.reload();
+                        // Mostrar algún mensaje de confirmación al usuario si lo deseas
+                    } else {
+                        console.error(
+                            "Error al eliminar el registro:",
+                            response.message
+                        );
+                        alert("Error al eliminar el registro");
+                    }
+                    // Actualizar la tabla después de eliminar el registro
+                    // $('#ventasTable').DataTable().ajax.reload(null, false);
+                } catch (error) {
+                    console.error(
+                        "Error al eliminar el registro:",
+                        error.stack
+                    );
+                    console.log(error);
+                    alert("Error al eliminar el registro");
+                }
+            });
+
+            $("#deleteFormSale").on("submit", async function (event) {
                 event.preventDefault();
                 const url = this.action;
                 console.log("URL de la solicitud DELETE:", url);

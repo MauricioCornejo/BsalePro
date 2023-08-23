@@ -235,10 +235,13 @@ app.get('/sales', async (req, res) => {
         const client = await pool.connect();
         // const resultSearch = await client.query('SELECT id, ticket_number, products, date, id_client, status, payment_method, amount_paid, amount_paid_formated, seller_name, total_amount, total_amount_formated FROM flores.sale');
 
-        const resultSearch = await client.query('SELECT  * FROM flores.sale s JOIN flores.client c ON s.id_client = c.id ');
+        // const resultSearch = await client.query('SELECT  * FROM flores.sale s JOIN flores.client c ON s.id_client = c.id ');
+        const resultSearch = await client.query('SELECT  client.name, sale.id, sale.products, sale.date, sale.status, sale.payment_method, sale.amount_paid, sale.amount_paid_formated, sale.seller_name, sale.total_amount, sale.total_amount_formated, sale.ticket_number FROM client JOIN sale ON client.id = sale.id_client');
+
+
         const salesSearch = resultSearch.rows;
         client.release();
-        // console.log('resultSearch sales:', salesSearch);
+        //  console.log('resultSearch sales:', salesSearch);
         res.json({ data: salesSearch }); // Responder con el objeto venta en formato JSON
     } catch (error) {
         console.error('Error al obtener el registro:', error);
@@ -246,7 +249,21 @@ app.get('/sales', async (req, res) => {
     }
 });
 
-
+// Eliminar un registro (Mostrar modal de eliminar)
+app.delete('/delete_sale/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const client = await pool.connect(); 
+        console.log("el id a eliminar", id)
+        await client.query(`DELETE FROM flores.sale WHERE id = $1`, [id]);
+        client.release();
+        res.json({ success: true });
+    } catch (error) {
+        const { id } = req.params;
+        console.error('Error al eliminar el registro:', error, [id]);
+        res.status(500).json({ success: false, message: 'Error al eliminar el registro' });
+    }
+});
 
 
 
