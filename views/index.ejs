@@ -265,7 +265,7 @@
                         </div>
                         <div class="form-group">
                             <label for="client_email">Email: &nbsp; &nbsp; </label>
-                            <input type="email" name="client_email" class="form-control" required />
+                            <input type="text" name="client_email" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
@@ -399,6 +399,7 @@
                                 <button class="btn btn-danger btn-sm" id="out_product_sale">
                                     - Producto
                                 </button>
+                                &nbsp;
                                 <button class="btn btn-success btn-sm" id="add_product_sale">
                                     + Producto
                                 </button>
@@ -406,43 +407,46 @@
                         </div>
                         <br>
                         <br>
-                        <div class="row">
-                            <div class="container mt-12">
-                                <div class="table-responsive">
-                                    <table id="productSaleTable" class="table table-dark table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Producto</th>
-                                                <th>Cantidad</th>
-                                                <th>Precio Unitario</th>
-                                                <th>Sub Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
 
-                            </div>
-                        </div>
-                        <br>
                     </div>
+                    <br>
+                    <div class="row">
+                        <center>
+                            <table id="productSaleTable" class="table table-dark table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </center>
+
+                    </div>
+                    <br>
+
+                </div>
+                <div class="modal-footer">
+
                     <div class="row">
                         <div class="col-md-12 ">
-                            <button class="btn btn-primary" id="button_add_product_sale">
+                            <button class="btn btn-primary" id="button_add_sale">
                                 Agregar venta
                             </button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Modal Delete Sale -->
-    <div class="modal fade" id="deleteSaleModal" tabindex="-1" aria-labelledby="deleteSaleModalLabel"
-        aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal fade" id="deleteSaleModal" tabindex="-1" aria-labelledby="deleteSaleModalLabel" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -551,8 +555,8 @@
                         </div>
                         <div class="form-group">
                             <label for="client_email">Email: &nbsp; &nbsp; </label>
-                            <input type="email" name="client_email" class="form-control" id="client_email_edit"
-                                required />
+                            <input type="text" name="client_email" class="form-control" id="client_email_edit"
+                                />
                         </div>
                         <div class="form-group">
                             <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
@@ -697,8 +701,6 @@
                     { data: 'status' },
                     {
                         data: 'id', render: function (data, type, row) {
-                            console.log(row)
-
                             return `  <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
                                 data-bs-target="#editClientModal" data-id="<%= data %>">Editar</a>
                             &nbsp; &nbsp;
@@ -795,6 +797,7 @@
             let total_amount_product = 0
             var table2 = $('#productSaleTable').DataTable({
                 responsive: true, // Hacer la tabla responsiva
+                processing: true,
                 pageLength: 10, // Número de filas por página
                 language: {
                     // Traducciones al español (puedes personalizarlas según tus necesidades)
@@ -842,6 +845,36 @@
                         : data;
             };
 
+            let position
+            $('#productSaleTable tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    console.log("EN EL IF")
+                    position = null;
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table2.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    console.log("EN EL ELSE")
+                    if (data.length > 0) {
+                        var rowData = table2.row(this).data();
+                        position = rowData.id_in_row
+
+                        console.log("position selected", position)
+                    }
+                }
+            });
+
+            $('#out_product_sale').click(function () {
+                console.log("row a eliminar ----- >", position)
+                let index = data.findIndex(elemento => elemento.id_in_row === position);
+                if (index !== -1) {
+                    data.splice(index, 1);
+                }
+                table2.row('.selected').remove().draw(false);
+            });
+
+
             function formatAmount(number) {
                 // Convertir el número a formato con separadores de miles
                 const formattedNumber = number.toLocaleString('es-CL', {
@@ -852,22 +885,26 @@
                 return formattedNumber;
             }
 
+            function generateUUID() {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0,
+                        v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
             $("#add_product_sale").on('click', function () {
                 let id = $("#id_product_select").val()
                 let quantity = $("#quantity").val();
                 let product_sale_price = $("#product_sale_price").val();
                 let product_sale_price_formated = formatAmount(Number(product_sale_price));
-
-
-
                 let sub_total = product_sale_price * quantity;
                 let sub_total_formated = formatAmount(Number(sub_total));
-                console.log(sub_total_formated);
                 // // // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
                 fetch(`/edit_product/${id}`)
                     .then((response) => response.json())
                     .then((dataProduct) => {
                         const rowToAdd = {
+                            id_in_row: generateUUID(),
                             id: dataProduct.id,
                             name: dataProduct.name,
                             cost: dataProduct.cost,
@@ -897,7 +934,7 @@
                     });
             });
 
-            $("#button_add_product_sale").on('click', async function () {
+            $("#button_add_sale").on('click', async function () {
                 let client = $("#id_client_select").val();
                 let sales_date = $("#sale_date").val();
                 let status_sale = $("#status_sale").val();
@@ -939,7 +976,6 @@
                     amount_paid: amount_paid_sale,
 
                 };
-                console.log("auxProduct", auxProduct)
                 try {
                     const response = await $.ajax({
                         type: "POST",
@@ -1116,8 +1152,8 @@
                     );
             });
 
-             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
-             $("#deleteSaleModal").on("show.bs.modal", function (event) {
+            // Obtener el formulario de eliminación cuando se muestra el modal eliminar
+            $("#deleteSaleModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
                 const id = button.data("id"); // Extraer el ID de los datos atributos del botón
                 console.log("ID del registro a eliminar:", id);
