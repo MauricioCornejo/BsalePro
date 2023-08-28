@@ -42,46 +42,9 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- <% sales.forEach(sale=> { %>
-                                <tr>
-                                    <td>
-                                        <%= sale.ticket_number %>
-                                    </td>
-                                    <td>
-                                        <%= sale.products %>
-                                    </td>
-                                    <td>
-                                        <%= sale.id_client %>
-                                    </td>
-                                    <td>
-                                        <%= sale.date %>
-                                    </td>
-                                    <td>
-                                        <%= sale.payment_method %>
-                                    </td>
-                                    <td>
-                                        <%= sale.total_amount_formated %>
-                                    </td>
-                                    <td>
-                                        <%= sale.amount_paid %>
-                                    </td>
-                                    <td>
-                                        <%= sale.status %>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
-                                            data-bs-target="#editModal" data-id="<%= sale.id %>">Editar</a>
-                                        &nbsp; &nbsp;
-                                        <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal" data-id="<%= sale.id %>">Eliminar</a>
-                                    </td>
-                                </tr>
-                                <% }) %> -->
             </tbody>
         </table>
     </div>
-
-
 
     <!-- Tabla Clientes  -->
     <div class="container mt-5">
@@ -473,7 +436,6 @@
         </div>
     </div>
 
-
     <!-- Modal Delete Product -->
     <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel"
         aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -532,6 +494,156 @@
         </div>
     </div>
 
+    <!-- Modal Editar Sale -->
+    <div class="modal fade" id="editSaleModal" tabindex="-1" aria-labelledby="editSaleModalLabel" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSaleModalLabel">
+                        Editar Venta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-1 ">
+                            <label for="id_client_select_edit">Cliente: </label>
+                        </div>
+                        <div class="col-md-5 ">
+                            <div class="form-group">
+                                <select class="form-select" data-live-search="true" aria-label="selectClientSaleEdit"
+                                    name="id_client_select_edit" id="id_client_select_edit" required>
+                                    <% clients.forEach(client=> { %>
+                                        <option value=<%=client.id %>><%= client.name %>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 " style="align-content: end;">
+                            <label for="sale_date_edit">Fecha Venta:</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="date" name="sale_date_edit" id="sale_date_edit" class="form-control"
+                                    required />
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-2 ">
+                            <label for="payment_method_edit">Método de Pago: </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" name="payment_method_edit" id="payment_method_edit"
+                                    class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-md-2 ">
+                            <label for="amount_paid_edit">Monto Pagado: </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="number" name="amount_paid_edit" id="amount_paid_edit" class="form-control"
+                                    required />
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-2 ">
+                            <label for="status_sale_edit">Estado: </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" name="status_sale_edit" id="status_sale_edit" class="form-control"
+                                    required />
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-1 ">
+                            <label for="id_product_select_edit">Productos: </label>
+                        </div>
+                        <div class="col-md-3 ">
+                            <select class="form-select" data-live-search="true" aria-label="selectProductsSaleEdit"
+                                name="id_product_select_edit" id="id_product_select_edit" required>
+                                <% products.forEach(product=> { %>
+                                    <option value="<%= product.id %>">
+                                        <%= product.name %>%>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+                        <div class="col-md-1 ">
+                            <label for="quantity_edit">Cantidad:</label>
+                        </div>
+                        <div class="col-md-1 ">
+                            <div class="form-group">
+                                <input type="number" min="1" value="1" name="quantity_edit" class="form-control"
+                                    id="quantity_edit" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-1 ">
+                            <label for="product_sale_price_edit">Precio:</label>
+                        </div>
+                        <div class="col-md-2 ">
+                            <div class="form-group">
+                                <input type="number" min="1" name="product_sale_price_edit" id="product_sale_price_edit"
+                                    class="form-control" value="1" required />
+                            </div>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <button class="btn btn-danger btn-sm" id="out_product_sale_edit">
+                                - Producto
+                            </button>
+                            &nbsp;
+                            <button class="btn btn-success btn-sm" id="add_product_sale_edit">
+                                + Producto
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+                <br>
+                <div class="row">
+                    <center>
+                        <table id="productSaleTableEdit" class="table table-dark table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Sub Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </center>
+
+                </div>
+                <br>
+                <br>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="button_edit_sale">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Editar Cliente -->
     <div class="modal fade" id="editClientModal" tabindex="-1" aria-labelledby="editClientModalLabel" aria-hidden="true"
         data-bs-backdrop="static" data-bs-keyboard="false">
@@ -555,8 +667,7 @@
                         </div>
                         <div class="form-group">
                             <label for="client_email">Email: &nbsp; &nbsp; </label>
-                            <input type="text" name="client_email" class="form-control" id="client_email_edit"
-                                />
+                            <input type="text" name="client_email" class="form-control" id="client_email_edit" />
                         </div>
                         <div class="form-group">
                             <label for="cell_phone">Celular: &nbsp; &nbsp; </label>
@@ -648,6 +759,23 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script>
+        function formatAmount(number) {
+            // Convertir el número a formato con separadores de miles
+            const formattedNumber = number.toLocaleString('es-CL', {
+                style: 'currency',
+                currency: 'CLP'
+            });
+
+            return formattedNumber;
+        }
+
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
         document.addEventListener("DOMContentLoaded", function () {
             // Inicializar DataTables
             let sales_table = new DataTable('#salesTable', {
@@ -702,7 +830,7 @@
                     {
                         data: 'id', render: function (data, type, row) {
                             return `  <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
-                                data-bs-target="#editClientModal" data-id="<%= data %>">Editar</a>
+                                data-bs-target="#editSaleModal" data-id="${row.id}">Editar</a>
                             &nbsp; &nbsp;
                             <a href="#" class="btn btn-sm btn-danger delete-btn" data-bs-toggle="modal"
                                 data-bs-target="#deleteSaleModal" data-id="${row.id}">Eliminar</a>
@@ -739,8 +867,6 @@
                             .replace(/ΐ/g, "ι")
                         : data;
             };
-
-
             // Formatting function for row details - modify as you need
             // function format(d) {
             //     // `d` is the original data object for the row
@@ -789,7 +915,6 @@
             //         row.child(format(row.data())).show();
             //     }
             // });
-
         });
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -848,25 +973,25 @@
             let position
             $('#productSaleTable tbody').on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
-                    console.log("EN EL IF")
+                    // console.log("EN EL IF")
                     position = null;
                     $(this).removeClass('selected');
                 }
                 else {
                     table2.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
-                    console.log("EN EL ELSE")
+                    // console.log("EN EL ELSE")
                     if (data.length > 0) {
                         var rowData = table2.row(this).data();
                         position = rowData.id_in_row
 
-                        console.log("position selected", position)
+                        // console.log("position selected", position)
                     }
                 }
             });
 
             $('#out_product_sale').click(function () {
-                console.log("row a eliminar ----- >", position)
+                // console.log("row a eliminar ----- >", position)
                 let index = data.findIndex(elemento => elemento.id_in_row === position);
                 if (index !== -1) {
                     data.splice(index, 1);
@@ -875,23 +1000,7 @@
             });
 
 
-            function formatAmount(number) {
-                // Convertir el número a formato con separadores de miles
-                const formattedNumber = number.toLocaleString('es-CL', {
-                    style: 'currency',
-                    currency: 'CLP'
-                });
 
-                return formattedNumber;
-            }
-
-            function generateUUID() {
-                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                    var r = Math.random() * 16 | 0,
-                        v = c == 'x' ? r : (r & 0x3 | 0x8);
-                    return v.toString(16);
-                });
-            }
             $("#add_product_sale").on('click', function () {
                 let id = $("#id_product_select").val()
                 let quantity = $("#quantity").val();
@@ -923,7 +1032,7 @@
                         data.push(rowToAdd)
                         table2.row.add(rowToAdd).draw(false);
                         // $('#productSaleTable').row.add(rowToAdd).draw(false);
-                        console.log(data)
+                        // console.log(data)
                         // console.log(dataProduct)
                     })
                     .catch((error) => {
@@ -985,7 +1094,7 @@
                     });
 
                     if (response.success) {
-                        console.log("Registro creado exitosamente.");
+                        // console.log("Registro creado exitosamente.");
                         location.reload();
                         // Mostrar algún mensaje de confirmación al usuario si lo deseas
                     } else {
@@ -1002,7 +1111,7 @@
                         "Error al eliminar el registro:",
                         error.stack
                     );
-                    console.log(error);
+                    // console.log(error);
                     alert("Error al eliminar el registro");
                 }
             })
@@ -1099,6 +1208,259 @@
         });
 
         document.addEventListener("DOMContentLoaded", function () {
+            var dataEdit = []
+            /** editar cliente modal*/
+
+            var tableEditSaleProduct = $('#productSaleTableEdit').DataTable({
+                responsive: true, // Hacer la tabla responsiva
+                processing: true,
+                pageLength: 10, // Número de filas por página
+                language: {
+                    // Traducciones al español (puedes personalizarlas según tus necesidades)
+                    search: "Buscar productos agregados:",
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron resultados",
+                    info: " Página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior",
+                    },
+                },
+                // data: data.products,
+                columns: [
+                    { data: 'name' },
+                    { data: 'quantity' },
+                    { data: 'product_sale_price_formated' },
+                    { data: 'sub_total_formated' }
+                ],
+                columnDefs: [
+                    {
+                        targets: "_all",
+                        className: "editable"
+                    }
+                ],
+            });
+
+            $.fn.dataTable.ext.type.search.string = function (data) {
+                return !data
+                    ? ""
+                    : typeof data === "string"
+                        ? data
+                            .replace(/έ/g, "ε")
+                            .replace(/ύ/g, "υ")
+                            .replace(/ό/g, "ο")
+                            .replace(/ώ/g, "ω")
+                            .replace(/ά/g, "α")
+                            .replace(/ί/g, "ι")
+                            .replace(/ή/g, "η")
+                            .replace(/έ/g, "ε")
+                            .replace(/ς/g, "σ")
+                            .replace(/ϊ/g, "ι")
+                            .replace(/ΰ/g, "υ")
+                            .replace(/ϋ/g, "υ")
+                            .replace(/ΐ/g, "ι")
+                        : data;
+            };
+            let idToEdit;
+            let positionEdit;
+            $('#productSaleTableEdit tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    // console.log("EN EL IF")
+                    positionEdit = null;
+                    $(this).removeClass('selected');
+                }
+                else {
+                    tableEditSaleProduct.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    // console.log("EN EL ELSE")
+                    if (dataEdit.length > 0) {
+
+                        var rowData = tableEditSaleProduct.row(this).data();
+                        positionEdit = rowData.id_in_row
+                        // console.log("datos de la tabla", tableEditSaleProduct.data())
+                        // console.log("position edit selected", positionEdit)
+                    }
+                }
+            });
+
+            // $('#productSaleTableEdit tbody').on('click', 'td.editable', function () {
+            //     var cell = tableEditSaleProduct.cell(this);
+            //     var originalValue = cell.data();
+            //     var input = $('<input type="text">').val(originalValue);
+
+            //     cell.data(input);
+            //     input.focus();
+
+            //     input.on('blur', function () {
+            //         var newValue = input.val();
+            //         console.log(newValue)
+            //         cell.data(newValue).draw();
+            //     });
+
+            //     input.on('keydown', function (event) {
+            //         if (event.keyCode === 13) { // Enter key
+            //             input.blur();
+            //         }
+            //     });
+            // });
+
+            $('#out_product_sale_edit').click(function () {
+                // console.log("row a eliminar ----- >", positionEdit)
+                let index = dataEdit.findIndex(elemento => elemento.id_in_row === positionEdit);
+                if (index !== -1) {
+                    dataEdit.splice(index, 1);
+                }
+                tableEditSaleProduct.row('.selected').remove().draw(false);
+            });
+
+            $("#add_product_sale_edit").on('click', function () {
+                let id = $("#id_product_select_edit").val()
+                let quantity = $("#quantity_edit").val();
+                let product_sale_price = $("#product_sale_price_edit").val();
+                let product_sale_price_formated = formatAmount(Number(product_sale_price));
+                let sub_total = product_sale_price * quantity;
+                let sub_total_formated = formatAmount(Number(sub_total));
+                // // // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
+                fetch(`/edit_product/${id}`)
+                    .then((response) => response.json())
+                    .then((dataProduct) => {
+                        const rowToAdd = {
+                            id_in_row: generateUUID(),
+                            id: dataProduct.id,
+                            name: dataProduct.name,
+                            cost: dataProduct.cost,
+                            stock: dataProduct.stock,
+                            type: dataProduct.type,
+                            variant: dataProduct.variant,
+                            measurement: dataProduct.measurement,
+                            product_sale_price: product_sale_price,
+                            product_sale_price_formated: product_sale_price_formated,
+                            stock_formated: dataProduct.stock_formated,
+                            quantity: quantity,
+                            subTotal: sub_total,
+                            sub_total_formated: sub_total_formated
+                        }
+                        // total_amount_product_edit += rowToAdd.subTotal;
+                        dataEdit.push(rowToAdd)
+                        tableEditSaleProduct.row.add(rowToAdd).draw(false);
+                        // $('#productSaleTable').row.add(rowToAdd).draw(false);
+                        // console.log(dataEdit)
+                        // console.log(dataProduct)
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "Error al obtener los datos de la venta:",
+                            error
+                        )
+                    });
+            });
+
+            $("#editSaleModal").on("show.bs.modal", function (event) {
+                const button = $(event.relatedTarget); // Botón que activó el modal
+                const id = button.data("id"); // Extraer el ID de los datos atributos del botón
+                // const form = document.getElementById("editSaleForm");
+                // form.action = `/edit_sale/${id}`; // Actualizar el atributo 'action' del formulario
+                // console.log("el id", id);
+                idToEdit = id;
+                // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
+                fetch(`/edit_sale/${id}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        var now = moment(data.date);
+                        let dateSelectedEdit = now.format('YYYY-MM-DD');
+                        $("#sale_date_edit").val(dateSelectedEdit);
+                        $("#payment_method_edit").val(data.payment_method);
+                        $("#amount_paid_edit").val(data.amount_paid);
+                        $("#status_sale_edit").val(data.status);
+                        $("#id_client_select_edit").val(data.id_client);
+
+                        tableEditSaleProduct.clear().draw();
+                        tableEditSaleProduct.rows.add(data.products).draw(false);
+                        dataEdit = data.products
+                        // console.log(dataEdit)
+                        // form.elements.client_name_edit.value = data.name;
+                        // form.elements.client_rut_edit.value = data.rut;
+                        // form.elements.client_email_edit.value = data.email;
+                        // form.elements.cell_phone_edit.value = data.cell_phone;
+                        // form.elements.client_address_edit.value = data.address;
+                    })
+                    .catch((error) =>
+                        console.error(
+                            "Error al obtener los datos de la venta:",
+                            error
+                        )
+                    );
+            });
+
+            $("#button_edit_sale").on('click', async function () {
+
+                let clientEdit = $("#id_client_select_edit").val();
+                let sales_date = $("#sale_date_edit").val();
+                let status_sale = $("#status_sale_edit").val();
+                let payment_method = $("#payment_method_edit").val();
+                let amount_paid_sale = $("#amount_paid_edit").val();
+
+
+                // console.log("hice click")
+                let tableEditProdutValuesLength = tableEditSaleProduct.rows().data().length;
+                // console.log("tableEditProdutValuesLength", tableEditProdutValuesLength)
+                let tableEditProdutValues = tableEditSaleProduct.rows().data();
+                dataEdit = [];
+                let total_amount_product_edit = 0;
+                for (var i = 0; i < tableEditProdutValuesLength; i++) {
+                    total_amount_product_edit += Number(tableEditSaleProduct.rows().data()[i].subTotal);
+                    dataEdit.push(tableEditSaleProduct.rows().data()[i])
+                }
+                // console.log("datEdit", dataEdit)
+                // console.log("total_amount_product_edit", total_amount_product_edit)
+                let total_amountedit = total_amount_product_edit;
+                let auxProductEdit = {
+                    products: dataEdit,
+                    // products2: tableEditProdutValues,
+                    sales_date: sales_date,
+                    id_client_select: clientEdit,
+                    status_sale: status_sale,
+                    payment_method: payment_method,
+                    total_amount: total_amountedit,
+                    amount_paid: amount_paid_sale,
+
+                };
+                // console.log(auxProductEdit)
+                try {
+                    const response = await $.ajax({
+                        type: "POST",
+                        url: `/edit_sale/${idToEdit}`,
+                        dataType: "json",
+                        data: auxProductEdit
+                    });
+
+                    if (response.success) {
+                        // console.log("Registro eliminado exitosamente.");
+                        window.location.reload();
+                        // Mostrar algún mensaje de confirmación al usuario si lo deseas
+                    } else {
+                        console.error(
+                            "Error al eliminar el registro:",
+                            response.message
+                        );
+                        alert("Error al eliminar el registro");
+                    }
+                    // Actualizar la tabla después de eliminar el registro
+                    // $('#ventasTable').DataTable().ajax.reload(null, false);
+                } catch (error) {
+                    console.error(
+                        "Error al eliminar el registro:",
+                        error.stack
+                    );
+                    // console.log(error);
+                    alert("Error al eliminar el registro");
+                }
+            })
+
             /** editar cliente modal*/
             $("#editClientModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
@@ -1130,12 +1492,12 @@
                 const id = button.data("id"); // Extraer el ID de los datos atributos del botón
                 const form = document.getElementById("editProductForm");
                 form.action = `/edit_product/${id}` // Actualizar el atributo 'action' del formulario
-                console.log("el id", id)
+                // console.log("el id", id)
                 // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
                 fetch(`/edit_product/${id}`)
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log(data)
+                        // console.log(data)
                         form.elements.name_product_edit.value = data.name;
                         form.elements.sku_product.value = data.sku;
                         form.elements.measurement_edit.value = data.measurement;
@@ -1156,39 +1518,37 @@
             $("#deleteSaleModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
                 const id = button.data("id"); // Extraer el ID de los datos atributos del botón
-                console.log("ID del registro a eliminar:", id);
+                // console.log("ID del registro a eliminar:", id);
                 const form = document.getElementById("deleteFormSale");
                 form.action = `/delete_sale/${id}`; // Actualizar el atributo 'action' del formulario
-                console.log(form.action)
+                // console.log(form.action)
             });
-
-
 
             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
             $("#deleteClientModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
                 const id = button.data("id"); // Extraer el ID de los datos atributos del botón
-                console.log("ID del registro a eliminar:", id);
+                // console.log("ID del registro a eliminar:", id);
                 const form = document.getElementById("deleteFormClient");
                 form.action = `/delete_client/${id}`; // Actualizar el atributo 'action' del formulario
-                console.log(form.action)
+                // console.log(form.action)
             });
 
             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
             $("#deleteProductModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
                 const id = button.data("id"); // Extraer el ID de los datos atributos del botón
-                console.log("ID del registro a eliminar:", id);
+                // console.log("ID del registro a eliminar:", id);
                 const form = document.getElementById("deleteFormProduct");
                 form.action = `/delete_product/${id}`; // Actualizar el atributo 'action' del formulario
-                console.log(form.action)
+                // console.log(form.action)
             });
 
             // Eliminar el registro al enviar el formulario
             $("#deleteFormClient").on("submit", async function (event) {
                 event.preventDefault();
                 const url = this.action;
-                console.log("URL de la solicitud DELETE:", url);
+                // console.log("URL de la solicitud DELETE:", url);
                 // Realizar la solicitud de eliminación mediante AJAX
                 try {
                     const response = await $.ajax({
@@ -1198,7 +1558,7 @@
                     });
 
                     if (response.success) {
-                        console.log("Registro eliminado exitosamente.");
+                        // console.log("Registro eliminado exitosamente.");
                         location.reload();
                         // Mostrar algún mensaje de confirmación al usuario si lo deseas
                     } else {
@@ -1215,7 +1575,7 @@
                         "Error al eliminar el registro:",
                         error.stack
                     );
-                    console.log(error);
+                    // console.log(error);
                     alert("Error al eliminar el registro");
                 }
             });
@@ -1224,7 +1584,7 @@
             $("#deleteFormProduct").on("submit", async function (event) {
                 event.preventDefault();
                 const url = this.action;
-                console.log("URL de la solicitud DELETE:", url);
+                // console.log("URL de la solicitud DELETE:", url);
                 // Realizar la solicitud de eliminación mediante AJAX
                 try {
                     const response = await $.ajax({
@@ -1234,7 +1594,7 @@
                     });
 
                     if (response.success) {
-                        console.log("Registro eliminado exitosamente.");
+                        // console.log("Registro eliminado exitosamente.");
                         location.reload();
                         // Mostrar algún mensaje de confirmación al usuario si lo deseas
                     } else {
@@ -1251,7 +1611,7 @@
                         "Error al eliminar el registro:",
                         error.stack
                     );
-                    console.log(error);
+                    // console.log(error);
                     alert("Error al eliminar el registro");
                 }
             });
@@ -1259,7 +1619,7 @@
             $("#deleteFormSale").on("submit", async function (event) {
                 event.preventDefault();
                 const url = this.action;
-                console.log("URL de la solicitud DELETE:", url);
+                // console.log("URL de la solicitud DELETE:", url);
                 // Realizar la solicitud de eliminación mediante AJAX
                 try {
                     const response = await $.ajax({
@@ -1269,7 +1629,7 @@
                     });
 
                     if (response.success) {
-                        console.log("Registro eliminado exitosamente.");
+                        // console.log("Registro eliminado exitosamente.");
                         location.reload();
                         // Mostrar algún mensaje de confirmación al usuario si lo deseas
                     } else {

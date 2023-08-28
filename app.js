@@ -190,14 +190,7 @@ app.post('/add_sale', async (req, res) => {
         // const ticket_number = 0;
         const amount_paid_formated = formatAmount(Number(amount_paid))
         const total_amount_formated = formatAmount(Number(total_amount))
-
-
-        // Convierte los campos que contienen arreglos a arrays
-        // const cantidadProductoArr = cantidad_producto.split(',').map(Number);
-        // const skuProductoArr = sku_producto.split(',');
-        // const precioProductoArr = precio_producto.split(',').map(Number);
-        // const nombreProductoArr = nombre_producto.split(',');
-        console.log("productos add sale  ===>", products);
+        // console.log("productos add sale  ===>", products);
         const client = await pool.connect();
         await client.query(
             `INSERT INTO flores.sale
@@ -230,7 +223,7 @@ app.post('/add_sale', async (req, res) => {
 // Editar un registro (Mostrar modal de editar)
 app.get('/sales', async (req, res) => {
     try {
-        console.log("******************* LLEGUE AL get Sales")
+        // console.log("******************* LLEGUE AL get Sales")
         // const { id } = req.params;
         const client = await pool.connect();
         // const resultSearch = await client.query('SELECT id, ticket_number, products, date, id_client, status, payment_method, amount_paid, amount_paid_formated, seller_name, total_amount, total_amount_formated FROM flores.sale');
@@ -254,7 +247,7 @@ app.delete('/delete_sale/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const client = await pool.connect(); 
-        console.log("el id a eliminar", id)
+        // console.log("el id a eliminar", id)
         await client.query(`DELETE FROM flores.sale WHERE id = $1`, [id]);
         client.release();
         res.json({ success: true });
@@ -264,6 +257,69 @@ app.delete('/delete_sale/:id', async (req, res) => {
         res.status(500).json({ success: false, message: 'Error al eliminar el registro' });
     }
 });
+
+// Editar un registro (Mostrar modal de editar)
+app.get('/edit_sale/:id', async (req, res) => {
+    try {
+        // console.log("******************* LLEGUE AL EDIT SALEEE GET")
+        const { id } = req.params;
+        const client = await pool.connect();
+        const resultSearch = await client.query('SELECT * FROM flores.sale WHERE id = $1', [id]);
+        const salesSearch = resultSearch.rows[0];
+        client.release();
+        // console.log('resultSearch:', resultSearch.rows[0]);
+        // res.render('edit_client/:id');
+        res.json(salesSearch); // Responder con el objeto venta en formato JSON
+    } catch (error) {
+        console.error('Error al obtener el registro:', error);
+        res.status(500).json({ error: 'Error al obtener el registro' }); // Responder con un objeto JSON en caso de error
+    }
+});
+
+// edit sale
+app.post('/edit_sale/:id', async (req, res) => {
+    try {
+
+        const { id } = req.params;
+        const { products,
+            sales_date,
+            id_client_select,
+            status_sale,
+            payment_method,
+            total_amount,
+            amount_paid
+        } = req.body;
+
+        // console.log("*****************LLEGUE AL POST EDITAR  sale  ************************************")
+        // console.log(req.body)
+        // console.log(id)
+        const amount_paid_formated = formatAmount(Number(amount_paid))
+        const total_amount_formated = formatAmount(Number(total_amount))
+        const client = await pool.connect();
+        await client.query(
+            `UPDATE flores.sale SET products = $1, date = $2, id_client = $3, status = $4, payment_method = $5, amount_paid = $6, amount_paid_formated = $7, total_amount = $8, total_amount_formated = $9 WHERE id = $10`,
+            [products,
+                sales_date,
+                id_client_select,
+                status_sale,
+                payment_method,
+                amount_paid,
+                amount_paid_formated,
+                total_amount,
+                total_amount_formated,
+                id]
+        );
+        client.release();
+        // res.redirect('/');
+        res.json({ success: true });
+       
+    } catch (error) {
+        console.error('Error al editar el registro:', error);
+        res.status(500).send('Error al editar el registro');
+    }
+});
+
+
 
 
 
@@ -294,7 +350,7 @@ app.post('/add_client', async (req, res) => {
             cell_phone,
             client_address,
         } = req.body;
-        console.log("nOMBRE DLE CLIENMTE ****** ", client_name)
+        // console.log("nOMBRE DLE CLIENMTE ****** ", client_name)
         const client = await pool.connect();
         await client.query(
             `INSERT INTO flores.client
@@ -320,13 +376,13 @@ app.post('/add_client', async (req, res) => {
 // Editar un registro (Mostrar modal de editar)
 app.get('/edit_client/:id', async (req, res) => {
     try {
-        console.log("******************* LLEGUE AL EDIT CLIENT GET")
+        // console.log("******************* LLEGUE AL EDIT CLIENT GET")
         const { id } = req.params;
         const client = await pool.connect();
         const resultSearch = await client.query('SELECT * FROM flores.client WHERE id = $1', [id]);
         const clientsSearch = resultSearch.rows[0];
         client.release();
-        console.log('resultSearch:', resultSearch.rows[0]);
+        // console.log('resultSearch:', resultSearch.rows[0]);
         // res.render('edit_client/:id');
         res.json(clientsSearch); // Responder con el objeto venta en formato JSON
     } catch (error) {
@@ -346,8 +402,8 @@ app.post('/edit_client/:id', async (req, res) => {
             cell_phone,
             client_address
         } = req.body;
-        console.log(req.body)
-        console.log("*****************LLEGUE AL POST EDITAR ************************************")
+        // console.log(req.body)
+        // console.log("*****************LLEGUE AL POST EDITAR ************************************")
         const client = await pool.connect();
         await client.query(
             `UPDATE flores.client SET name = $1, rut = $2, email = $3, cell_phone = $4, address = $5 WHERE id = $6`,
@@ -398,7 +454,7 @@ app.post('/add_product', async (req, res) => {
         } = req.body;
         const cost_formated = new Intl.NumberFormat().format((Number(cost_product)).toFixed(2)).replace(',', '.')
         const stock_formated = new Intl.NumberFormat().format((Number(stock)).toFixed(2)).replace(',', '.')
-        console.log("AGREGAR PRODUCTO", req.body)
+        // console.log("AGREGAR PRODUCTO", req.body)
         const client = await pool.connect();
         await client.query(
             `INSERT INTO flores.product 
@@ -429,13 +485,13 @@ app.post('/add_product', async (req, res) => {
 // Editar un registro (Mostrar modal de editar)
 app.get('/edit_product/:id', async (req, res) => {
     try {
-        console.log("******************* LLEGUE AL EDIT product GET")
+        // console.log("******************* LLEGUE AL EDIT product GET")
         const { id } = req.params;
         const client = await pool.connect();
         const resultSearch = await client.query('SELECT * FROM flores.product WHERE id = $1', [id]);
         const clientsSearch = resultSearch.rows[0];
         client.release();
-        console.log('resultSearch product:', resultSearch.rows[0]);
+        // console.log('resultSearch product:', resultSearch.rows[0]);
         // res.render('edit_client/:id');
         res.json(clientsSearch); // Responder con el objeto venta en formato JSON
     } catch (error) {
@@ -458,7 +514,7 @@ app.post('/edit_product/:id', async (req, res) => {
         } = req.body;
         const cost_formated = new Intl.NumberFormat().format((Number(cost_product)).toFixed(2)).replace(',', '.')
         const stock_formated = new Intl.NumberFormat().format((Number(stock)).toFixed(2)).replace(',', '.')
-        console.log("*****************LLEGUE AL POST EDITAR ************************************")
+        // console.log("*****************LLEGUE AL POST EDITAR ************************************")
         const client = await pool.connect();
         await client.query(
             `UPDATE flores.product SET sku = $1, name = $2, cost = $3, type = $4, stock = $5, variant = $6, measurement = $7, cost_formated = $8, stock_formated = $9 WHERE id = $10`,
