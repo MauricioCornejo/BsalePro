@@ -942,6 +942,7 @@
             $('#out_product_sale').click(function () {
                 let index = data.findIndex(elemento => elemento.id_in_row === position);
                 if (index !== -1) {
+                    total_amount_product = total_amount_product - Number(data[index].subTotal)
                     data.splice(index, 1);
                 }
                 table2.row('.selected').remove().draw(false);
@@ -992,7 +993,6 @@
                 let status_sale = $("#status_sale").val();
                 let payment_method = $("#payment_method").val();
                 let amount_paid_sale = $("#amount_paid").val();
-                let total_amount = total_amount_product;
 
                 if (client === '' || client === null || client === undefined) {
                     alert('Debes seleccionar un cliente')
@@ -1024,7 +1024,6 @@
                     id_client_select: client,
                     status_sale: status_sale,
                     payment_method: payment_method,
-                    total_amount: total_amount,
                     amount_paid: amount_paid_sale,
 
                 };

@@ -184,9 +184,12 @@ app.post('/add_sale', async (req, res) => {
             status_sale,
             payment_method,
             amount_paid,
-            // seller_name,
-            total_amount,
         } = req.body;
+        let total_amount = 0;
+        products.forEach(product => {
+            total_amount+= Number(product.subTotal)
+        });
+
         // const ticket_number = 0;
         const amount_paid_formated = formatAmount(Number(amount_paid))
         const total_amount_formated = formatAmount(Number(total_amount))
