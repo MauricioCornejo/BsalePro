@@ -295,6 +295,9 @@ app.post('/edit_sale/:id', async (req, res) => {
         // console.log(id)
         const amount_paid_formated = formatAmount(Number(amount_paid))
         const total_amount_formated = formatAmount(Number(total_amount))
+
+        console.log(amount_paid_formated)
+        console.log(total_amount_formated)
         const client = await pool.connect();
         await client.query(
             `UPDATE flores.sale SET products = $1, date = $2, id_client = $3, status = $4, payment_method = $5, amount_paid = $6, amount_paid_formated = $7, total_amount = $8, total_amount_formated = $9 WHERE id = $10`,
