@@ -112,7 +112,7 @@
                     <th>Costo</th>
                     <th>Stock</th>
                     <th>Tipo</th>
-                    <th>Varante</th>
+                    <th>Variante</th>
                     <th>Unidad/Kg</th>
                     <th>Acciones</th>
                 </tr>
@@ -334,7 +334,7 @@
                                     name="id_product_select" id="id_product_select" required>
                                     <% products.forEach(product=> { %>
                                         <option value="<%= product.id %>">
-                                            <%= product.name %>%>
+                                            <%= product.name %> - <%= product.variant %>%>
                                         </option>
                                         <% }) %>
                                 </select>

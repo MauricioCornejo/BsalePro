@@ -12,12 +12,21 @@ const { v4: uuidv4 } = require('uuid');
 // });
 
 //Prod 
+// const pool = new Pool({
+//     user: 'flores',
+//     host: 'dpg-cjfaqnqnip6c739eemgg-a.ohio-postgres.render.com',
+//     database: 'flores',
+//     password: '2ozHMesEMGur2Fuuawl4LU2CnITcBCQx',
+//     ssl: true,
+//     port: 5432
+// });
+
 const pool = new Pool({
-    user: 'flores',
-    host: 'dpg-cjfaqnqnip6c739eemgg-a.ohio-postgres.render.com',
-    database: 'flores',
-    password: '2ozHMesEMGur2Fuuawl4LU2CnITcBCQx',
-    ssl: true,
+    user: 'spina-01',
+    host: '34.176.172.225',
+    database: 'spina',
+    password: '##8YVldfv403$ts)',
+    // ssl: true,
     port: 5432
 });
 
@@ -41,9 +50,10 @@ function formatAmount(number) {
 app.get('/', async (req, res) => {
     try {
         const client = await pool.connect();
-        let result = await client.query('SELECT * FROM flores.ventas');
-        const data = result.rows;
-        const clientsResult = await client.query('SELECT * FROM flores.client');
+        // let result = await client.query('SELECT * FROM flores.ventas');
+        const data = [];
+        const clientsResult = await client.query('SELECT * FROM flores.client WHERE status_activity = true');
+        // const clientsResult = await client.query('SELECT * FROM flores.client');
         const clients = clientsResult.rows;
 
         const productsResult = await client.query('SELECT * FROM flores.product');
@@ -176,7 +186,7 @@ app.delete('/delete/:id', async (req, res) => {
 
 app.post('/add_sale', async (req, res) => {
     try {
-        // console.log(req.body)
+        console.log(req.body)
         const {
             products,
             sales_date,
@@ -214,7 +224,6 @@ app.post('/add_sale', async (req, res) => {
                 total_amount_formated
             ]
         );
-
         client.release();
         res.json({ success: true });
     } catch (error) {
@@ -232,12 +241,13 @@ app.get('/sales', async (req, res) => {
         // const resultSearch = await client.query('SELECT id, ticket_number, products, date, id_client, status, payment_method, amount_paid, amount_paid_formated, seller_name, total_amount, total_amount_formated FROM flores.sale');
 
         // const resultSearch = await client.query('SELECT  * FROM flores.sale s JOIN flores.client c ON s.id_client = c.id ');
-        const resultSearch = await client.query('SELECT  client.name, sale.id, sale.products, sale.date, sale.status, sale.payment_method, sale.amount_paid, sale.amount_paid_formated, sale.seller_name, sale.total_amount, sale.total_amount_formated, sale.ticket_number FROM client JOIN sale ON client.id = sale.id_client');
+        // const resultSearch = await client.query('SELECT client.name, sale.id, sale.products, sale.date, sale.status, sale.payment_method, sale.amount_paid, sale.amount_paid_formated, sale.seller_name, sale.total_amount, sale.total_amount_formated, sale.ticket_number FROM client JOIN sale ON client.id = sale.id_client');
 
+        const resultSearch = await client.query('SELECT flores.client.name, sale.id, sale.products, sale.date, sale.status, sale.payment_method, sale.amount_paid, sale.amount_paid_formated, sale.seller_name, sale.total_amount, sale.total_amount_formated, sale.ticket_number FROM flores.client JOIN flores.sale ON flores.client.id = flores.sale.id_client');
 
         const salesSearch = resultSearch.rows;
         client.release();
-        //  console.log('resultSearch sales:', salesSearch);
+        // console.log('resultSearch sales:', salesSearch);
         res.json({ data: salesSearch }); // Responder con el objeto venta en formato JSON
     } catch (error) {
         console.error('Error al obtener el registro:', error);
@@ -337,7 +347,7 @@ app.post('/edit_sale/:id', async (req, res) => {
 app.get('/client', async (req, res) => {
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM flores.cliente');
+        const result = await client.query('SELECT * FROM flores.cliente WHERE status_activity = true');
         const clients = result.rows;
         client.release();
         res.render('index', { clients }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
@@ -433,7 +443,9 @@ app.delete('/delete_client/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const client = await pool.connect();
-        await client.query(`DELETE FROM flores.client WHERE id = $1`, [id]);
+        const status_activity = false;
+        // await client.query(`DELETE FROM flores.client WHERE id = $1`, [id]);
+        await client.query(`UPDATE flores.client SET status_activity =$1  WHERE id = $2`, [status_activity, id]);
         client.release();
         res.json({ success: true });
     } catch (error) {
