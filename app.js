@@ -197,7 +197,7 @@ app.post('/add_sale', async (req, res) => {
         } = req.body;
         let total_amount = 0;
         products.forEach(product => {
-            total_amount+= Number(product.subTotal)
+            total_amount += Number(product.subTotal)
         });
 
         // const ticket_number = 0;
@@ -259,7 +259,7 @@ app.get('/sales', async (req, res) => {
 app.delete('/delete_sale/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const client = await pool.connect(); 
+        const client = await pool.connect();
         // console.log("el id a eliminar", id)
         await client.query(`DELETE FROM flores.sale WHERE id = $1`, [id]);
         client.release();
@@ -328,7 +328,7 @@ app.post('/edit_sale/:id', async (req, res) => {
         client.release();
         // res.redirect('/');
         res.json({ success: true });
-       
+
     } catch (error) {
         console.error('Error al editar el registro:', error);
         res.status(500).send('Error al editar el registro');
@@ -575,8 +575,8 @@ app.delete('/delete_product/:id', async (req, res) => {
 
 
 
-app.listen(3000, () => {
-    console.log('Servidor iniciado en http://localhost:3000');
+app.listen(8080, () => {
+    console.log('Servidor iniciado en http://localhost:8080');
 });
 
 
