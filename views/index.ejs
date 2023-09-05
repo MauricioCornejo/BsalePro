@@ -578,7 +578,7 @@
                                 name="id_product_select_edit" id="id_product_select_edit" required>
                                 <% products.forEach(product=> { %>
                                     <option value="<%= product.id %>">
-                                        <%= product.name %>%>
+                                        <%= product.name %> - <%= product.variant %>%>
                                     </option>
                                     <% }) %>
                             </select>
@@ -962,7 +962,7 @@
                         const rowToAdd = {
                             id_in_row: generateUUID(),
                             id: dataProduct.id,
-                            name: dataProduct.name,
+                            name: `${dataProduct.name} - ${dataProduct.variant}`,
                             cost: dataProduct.cost,
                             stock: dataProduct.stock,
                             type: dataProduct.type,
@@ -1245,7 +1245,7 @@
                         const rowToAdd = {
                             id_in_row: generateUUID(),
                             id: dataProduct.id,
-                            name: dataProduct.name,
+                            name: `${dataProduct.name} - ${dataProduct.variant}`,
                             cost: dataProduct.cost,
                             stock: dataProduct.stock,
                             type: dataProduct.type,
