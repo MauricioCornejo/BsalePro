@@ -20,7 +20,7 @@
 <body>
     <!-- Tabla Ventas  -->
     <div class="container mt-5">
-        <h1 class="mb-4">Tabla de Ventas</h1>
+        <h1 class="mb-4">Ventas</h1>
         <div class="mb-3">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSaleModal">
                 Registrar Venta
@@ -48,7 +48,7 @@
 
     <!-- Tabla Clientes  -->
     <div class="container mt-5">
-        <h1 class="mb-4">Tabla de Clientes</h1>
+        <h1 class="mb-4">Clientes</h1>
         <div class="mb-3">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarClienteModal">
                 Agregar Cliente
@@ -59,14 +59,17 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Rut</th>
-                    <th>Email</th>
+                    <!-- <th>Email</th>
                     <th>Celular</th>
-                    <th>Dirección</th>
+                    <th>Dirección</th> -->
+                    <th>Total Vendido</th>
+                    <th>Total Pagado</th>
+                    <th>Total Pendiente</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <% clients.forEach(client=> { %>
+                <% clientsWithSales.forEach(client=> { %>
                     <tr>
                         <td>
                             <%= client.name %>
@@ -74,7 +77,7 @@
                         <td>
                             <%= client.rut %>
                         </td>
-                        <td>
+                        <!-- <td>
                             <%= client.email %>
                         </td>
                         <td>
@@ -82,6 +85,15 @@
                         </td>
                         <td>
                             <%= client.address %>
+                        </td> -->
+                        <td>
+                            <%= client.total_sales %>
+                        </td>
+                        <td>
+                            <%= client.total_amount_paid %>
+                        </td>
+                        <td>
+                            <%= client.pending_amount %>
                         </td>
                         <td>
                             <a href="#" class="btn btn-sm btn-primary edit-btn" data-bs-toggle="modal"
@@ -98,7 +110,7 @@
 
     <!-- Tabla Productos  -->
     <div class="container mt-5">
-        <h1 class="mb-4">Tabla de Productos</h1>
+        <h1 class="mb-4">Productos</h1>
         <div class="mb-3">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
                 Agregar Producto
@@ -109,8 +121,8 @@
                 <tr>
                     <th>SKU</th>
                     <th>Nombre</th>
-                    <th>Costo</th>
                     <th>Stock</th>
+                    <th>Costo</th>
                     <th>Tipo</th>
                     <th>Variante</th>
                     <th>Unidad/Kg</th>
@@ -127,11 +139,12 @@
                             <%= product.name %>
                         </td>
                         <td>
-                            <%= product.cost_formated %>
-                        </td>
-                        <td>
                             <%= product.stock_formated %>
                         </td>
+                        <td>
+                            <%= product.cost_formated %>
+                        </td>
+
                         <td>
                             <%= product.type %>
                         </td>
@@ -270,6 +283,7 @@
                                 <div class="form-group">
                                     <select class="form-select" data-live-search="true" aria-label="selectClientSale"
                                         name="id_client_select" id="id_client_select" required>
+                                        <option value="seleccione">Seleccionar cliente...</option>
                                         <% clients.forEach(client=> { %>
                                             <option value=<%=client.id %>><%= client.name %>
                                             </option>
@@ -332,6 +346,7 @@
                             <div class="col-md-3 ">
                                 <select class="form-select" data-live-search="true" aria-label="selectProductsSale"
                                     name="id_product_select" id="id_product_select" required>
+                                    <option value="seleccione">Seleccionar producto...</option>
                                     <% products.forEach(product=> { %>
                                         <option value="<%= product.id %>">
                                             <%= product.name %> - <%= product.variant %>%>
@@ -368,33 +383,37 @@
                                 </button>
                             </div>
                         </div>
-                        <br>
-                        <br>
-
                     </div>
-                    <br>
-                    <div class="row">
-                        <center>
+                </div>
+                <br>
+                <div class="row">
+                    <center>
+                        <div class="col-md-6">
                             <table id="productSaleTable" class="table table-dark table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Producto</th>
                                         <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
+                                        <th>Precio</th>
                                         <th>Sub Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                             </table>
-                        </center>
-
-                    </div>
-                    <br>
+                        </div>
+                    </center>
 
                 </div>
                 <div class="modal-footer">
-
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <label for="total_sale_amount_table_label">Total venta:
+                                <label for="total_sale_amount_table" id="total_sale_amount_table"
+                                    style="font-weight: bold;"></label>
+                            </label>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12 ">
                             <button class="btn btn-primary" id="button_add_sale">
@@ -531,8 +550,6 @@
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <br>
                     <div class="row">
                         <div class="col-md-2 ">
                             <label for="payment_method_edit">Método de Pago: </label>
@@ -553,8 +570,6 @@
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <br>
                     <div class="row">
                         <div class="col-md-2 ">
                             <label for="status_sale_edit">Estado: </label>
@@ -565,10 +580,7 @@
                                     required />
                             </div>
                         </div>
-                        <br>
-                        <br>
                     </div>
-                    <br>
                     <div class="row">
                         <div class="col-md-1 ">
                             <label for="id_product_select_edit">Productos: </label>
@@ -576,6 +588,7 @@
                         <div class="col-md-3 ">
                             <select class="form-select" data-live-search="true" aria-label="selectProductsSaleEdit"
                                 name="id_product_select_edit" id="id_product_select_edit" required>
+                                <option value="seleccione">Seleccionar producto...</option>
                                 <% products.forEach(product=> { %>
                                     <option value="<%= product.id %>">
                                         <%= product.name %> - <%= product.variant %>%>
@@ -612,33 +625,44 @@
                             </button>
                         </div>
                     </div>
-                    <br>
-                    <br>
                 </div>
-                <br>
                 <div class="row">
                     <center>
-                        <table id="productSaleTableEdit" class="table table-dark table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio Unitario</th>
-                                    <th>Sub Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </center>
+                        <div class="col-md-6">
+                            <table id="productSaleTableEdit"
+                                class="display table table-responsive table-dark table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
 
+                    </center>
                 </div>
                 <br>
-                <br>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="button_edit_sale">
-                        Guardar Cambios
-                    </button>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <label for="total_sale_amount_table_label_edit">Total venta:
+                                <label for="total_sale_amount_table_edit" id="total_sale_amount_table_edit"
+                                    style="font-weight: bold;"></label>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <button type="submit" class="btn btn-primary" id="button_edit_sale">
+                                Guardar Cambios
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -759,8 +783,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script>
+        let total_amount_product = 0;
+        let total_amount_product_edit = 0;
+        // Convertir el número a formato con separadores de miles
         function formatAmount(number) {
-            // Convertir el número a formato con separadores de miles
             const formattedNumber = number.toLocaleString('es-CL', {
                 style: 'currency',
                 currency: 'CLP'
@@ -872,14 +898,14 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             var data = []
-            let total_amount_product = 0
+
             var table2 = $('#productSaleTable').DataTable({
                 responsive: true, // Hacer la tabla responsiva
                 processing: true,
                 pageLength: 10, // Número de filas por página
                 language: {
                     // Traducciones al español (puedes personalizarlas según tus necesidades)
-                    search: "Buscar productos agregados:",
+                    search: "Productos agregados:",
                     lengthMenu: "Mostrar _MENU_ registros por página",
                     zeroRecords: "No se encontraron resultados",
                     info: " Página _PAGE_ de _PAGES_",
@@ -943,48 +969,61 @@
                 let index = data.findIndex(elemento => elemento.id_in_row === position);
                 if (index !== -1) {
                     total_amount_product = total_amount_product - Number(data[index].subTotal)
+                    const label = document.getElementById('total_sale_amount_table');
+                    label.textContent = formatAmount(Number(total_amount_product));
                     data.splice(index, 1);
                 }
                 table2.row('.selected').remove().draw(false);
             });
 
             $("#add_product_sale").on('click', function () {
-                let id = $("#id_product_select").val()
-                let quantity = $("#quantity").val();
-                let product_sale_price = $("#product_sale_price").val();
-                let product_sale_price_formated = formatAmount(Number(product_sale_price));
-                let sub_total = product_sale_price * quantity;
-                let sub_total_formated = formatAmount(Number(sub_total));
+                let id = $("#id_product_select").val();
+                if (id !== 'seleccione') {
+                    let quantity = $("#quantity").val();
+                    let product_sale_price = $("#product_sale_price").val();
+                    let product_sale_price_formated = formatAmount(Number(product_sale_price));
+                    let sub_total = product_sale_price * quantity;
+                    let sub_total_formated = formatAmount(Number(sub_total));
+                    let new_total_amount_product = total_amount_product + sub_total;
+                    const label = document.getElementById('total_sale_amount_table');
+
+                    label.textContent = formatAmount(Number(new_total_amount_product));
+
+                    fetch(`/edit_product/${id}`)
+                        .then((response) => response.json())
+                        .then((dataProduct) => {
+                            const rowToAdd = {
+                                id_in_row: generateUUID(),
+                                id: dataProduct.id,
+                                name: `${dataProduct.name} - ${dataProduct.variant}`,
+                                cost: dataProduct.cost,
+                                stock: dataProduct.stock,
+                                type: dataProduct.type,
+                                variant: dataProduct.variant,
+                                measurement: dataProduct.measurement,
+                                product_sale_price: product_sale_price,
+                                product_sale_price_formated: product_sale_price_formated,
+                                stock_formated: dataProduct.stock_formated,
+                                quantity: quantity,
+                                subTotal: sub_total,
+                                sub_total_formated: sub_total_formated
+                            }
+                            total_amount_product += rowToAdd.subTotal;
+                            data.push(rowToAdd)
+                            table2.row.add(rowToAdd).draw(false);
+                        })
+                        .catch((error) => {
+                            console.error(
+                                "Error al obtener los datos de la venta:",
+                                error
+                            )
+                        });
+                } else {
+                    alert('Seleccione un producto');
+                }
+                // console.log("MONTO NUEVO", new_total_amount_product)
                 // // // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
-                fetch(`/edit_product/${id}`)
-                    .then((response) => response.json())
-                    .then((dataProduct) => {
-                        const rowToAdd = {
-                            id_in_row: generateUUID(),
-                            id: dataProduct.id,
-                            name: `${dataProduct.name} - ${dataProduct.variant}`,
-                            cost: dataProduct.cost,
-                            stock: dataProduct.stock,
-                            type: dataProduct.type,
-                            variant: dataProduct.variant,
-                            measurement: dataProduct.measurement,
-                            product_sale_price: product_sale_price,
-                            product_sale_price_formated: product_sale_price_formated,
-                            stock_formated: dataProduct.stock_formated,
-                            quantity: quantity,
-                            subTotal: sub_total,
-                            sub_total_formated: sub_total_formated
-                        }
-                        total_amount_product += rowToAdd.subTotal;
-                        data.push(rowToAdd)
-                        table2.row.add(rowToAdd).draw(false);
-                    })
-                    .catch((error) => {
-                        console.error(
-                            "Error al obtener los datos de la venta:",
-                            error
-                        )
-                    });
+
             });
 
             $("#button_add_sale").on('click', async function () {
@@ -994,7 +1033,7 @@
                 let payment_method = $("#payment_method").val();
                 let amount_paid_sale = $("#amount_paid").val();
 
-                if (client === '' || client === null || client === undefined) {
+                if (client === '' || client === null || client === undefined || client === 'seleccione') {
                     alert('Debes seleccionar un cliente')
                     return;
                 }
@@ -1078,6 +1117,31 @@
                         previous: "Anterior",
                     },
                 },
+                columnDefs: [
+                    {
+                        targets: 2,
+                        render: function (data, type, row) {
+                            // console.log(data)
+                            return `${formatAmount(Number(data))}`
+                        }
+                    },
+                    {
+                        targets: 3,
+                        render: function (data, type, row) {
+                            // console.log(data)
+                            return `${formatAmount(Number(data))}`
+                        }
+                    },
+                    {
+                        targets: 4,
+                        render: function (data, type, row) {
+                            // console.log(data)
+                            return `${formatAmount(Number(data))}`
+                        }
+                    }
+                ],
+
+
             });
 
             // Restringir la búsqueda para que no sea sensible a mayúsculas/minúsculas
@@ -1150,15 +1214,13 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             var dataEdit = []
-            /** editar cliente modal*/
-
             var tableEditSaleProduct = $('#productSaleTableEdit').DataTable({
                 responsive: true, // Hacer la tabla responsiva
                 processing: true,
                 pageLength: 10, // Número de filas por página
                 language: {
                     // Traducciones al español (puedes personalizarlas según tus necesidades)
-                    search: "Buscar productos agregados:",
+                    search: "Productos agregados:",
                     lengthMenu: "Mostrar _MENU_ registros por página",
                     zeroRecords: "No se encontraron resultados",
                     info: " Página _PAGE_ de _PAGES_",
@@ -1226,47 +1288,59 @@
             $('#out_product_sale_edit').click(function () {
                 let index = dataEdit.findIndex(elemento => elemento.id_in_row === positionEdit);
                 if (index !== -1) {
+                    total_amount_product_edit = total_amount_product_edit - Number(dataEdit[index].subTotal)
+                    const label = document.getElementById('total_sale_amount_table_edit');
+                    label.textContent = formatAmount(Number(total_amount_product_edit));
                     dataEdit.splice(index, 1);
                 }
                 tableEditSaleProduct.row('.selected').remove().draw(false);
             });
 
             $("#add_product_sale_edit").on('click', function () {
-                let id = $("#id_product_select_edit").val()
-                let quantity = $("#quantity_edit").val();
-                let product_sale_price = $("#product_sale_price_edit").val();
-                let product_sale_price_formated = formatAmount(Number(product_sale_price));
-                let sub_total = product_sale_price * quantity;
-                let sub_total_formated = formatAmount(Number(sub_total));
-                // // // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
-                fetch(`/edit_product/${id}`)
-                    .then((response) => response.json())
-                    .then((dataProduct) => {
-                        const rowToAdd = {
-                            id_in_row: generateUUID(),
-                            id: dataProduct.id,
-                            name: `${dataProduct.name} - ${dataProduct.variant}`,
-                            cost: dataProduct.cost,
-                            stock: dataProduct.stock,
-                            type: dataProduct.type,
-                            variant: dataProduct.variant,
-                            measurement: dataProduct.measurement,
-                            product_sale_price: product_sale_price,
-                            product_sale_price_formated: product_sale_price_formated,
-                            stock_formated: dataProduct.stock_formated,
-                            quantity: quantity,
-                            subTotal: sub_total,
-                            sub_total_formated: sub_total_formated
-                        }
-                        dataEdit.push(rowToAdd)
-                        tableEditSaleProduct.row.add(rowToAdd).draw(false);
-                    })
-                    .catch((error) => {
-                        console.error(
-                            "Error al obtener los datos de la venta:",
-                            error
-                        )
-                    });
+                let id = $("#id_product_select_edit").val();
+                if (id !== 'seleccione') {
+                    let quantity = $("#quantity_edit").val();
+                    let product_sale_price = $("#product_sale_price_edit").val();
+                    let product_sale_price_formated = formatAmount(Number(product_sale_price));
+                    let sub_total = product_sale_price * quantity;
+                    let sub_total_formated = formatAmount(Number(sub_total));
+                    let new_total_amount_product_edit = total_amount_product_edit + sub_total;
+                    const label = document.getElementById('total_sale_amount_table_edit');
+                    label.textContent = formatAmount(Number(new_total_amount_product_edit));
+                    // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
+                    fetch(`/edit_product/${id}`)
+                        .then((response) => response.json())
+                        .then((dataProduct) => {
+                            const rowToAdd = {
+                                id_in_row: generateUUID(),
+                                id: dataProduct.id,
+                                name: `${dataProduct.name} - ${dataProduct.variant}`,
+                                cost: dataProduct.cost,
+                                stock: dataProduct.stock,
+                                type: dataProduct.type,
+                                variant: dataProduct.variant,
+                                measurement: dataProduct.measurement,
+                                product_sale_price: product_sale_price,
+                                product_sale_price_formated: product_sale_price_formated,
+                                stock_formated: dataProduct.stock_formated,
+                                quantity: quantity,
+                                subTotal: sub_total,
+                                sub_total_formated: sub_total_formated
+                            }
+                            total_amount_product_edit += rowToAdd.subTotal;
+                            dataEdit.push(rowToAdd)
+                            tableEditSaleProduct.row.add(rowToAdd).draw(false);
+                        })
+                        .catch((error) => {
+                            console.error(
+                                "Error al obtener los datos de la venta:",
+                                error
+                            )
+                        });
+
+                } else {
+                    alert('Seleccione un producto');
+                }
             });
 
             $("#editSaleModal").on("show.bs.modal", function (event) {
@@ -1287,6 +1361,9 @@
                         tableEditSaleProduct.clear().draw();
                         tableEditSaleProduct.rows.add(data.products).draw(false);
                         dataEdit = data.products
+                        const label = document.getElementById('total_sale_amount_table_edit');
+                        label.textContent = data.total_amount_formated;
+                        total_amount_product_edit = data.total_amount;
                     })
                     .catch((error) =>
                         console.error(
@@ -1304,7 +1381,7 @@
                 let payment_method = $("#payment_method_edit").val();
                 let amount_paid_sale = $("#amount_paid_edit").val();
                 let tableEditProdutValuesLength = tableEditSaleProduct.rows().data().length;
-                // console.log("tableEditProdutValuesLength", tableEditProdutValuesLength)
+
                 let tableEditProdutValues = tableEditSaleProduct.rows().data();
                 dataEdit = [];
                 let total_amount_product_edit = 0;
@@ -1312,12 +1389,9 @@
                     total_amount_product_edit += Number(tableEditSaleProduct.rows().data()[i].subTotal);
                     dataEdit.push(tableEditSaleProduct.rows().data()[i])
                 }
-                // console.log("datEdit", dataEdit)
-                // console.log("total_amount_product_edit", total_amount_product_edit)
                 let total_amountedit = total_amount_product_edit;
                 let auxProductEdit = {
                     products: dataEdit,
-                    // products2: tableEditProdutValues,
                     sales_date: sales_date,
                     id_client_select: clientEdit,
                     status_sale: status_sale,
@@ -1326,7 +1400,6 @@
                     amount_paid: amount_paid_sale,
 
                 };
-                // console.log(auxProductEdit)
                 try {
                     const response = await $.ajax({
                         type: "POST",
@@ -1364,7 +1437,6 @@
                 const id = button.data("id"); // Extraer el ID de los datos atributos del botón
                 const form = document.getElementById("editClienteForm");
                 form.action = `/edit_client/${id}` // Actualizar el atributo 'action' del formulario
-                console.log("el id", id)
                 // Obtener los datos de la venta seleccionada y mostrarlos en el formulario de edición
                 fetch(`/edit_client/${id}`)
                     .then((response) => response.json())
@@ -1415,7 +1487,6 @@
                 const id = button.data("id"); // Extraer el ID de los datos atributos del botón
                 const form = document.getElementById("deleteFormSale");
                 form.action = `/delete_sale/${id}`; // Actualizar el atributo 'action' del formulario
-
             });
 
             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
@@ -1424,17 +1495,14 @@
                 const id = button.data("id"); // Extraer el ID de los datos atributos del botón
                 const form = document.getElementById("deleteFormClient");
                 form.action = `/delete_client/${id}`; // Actualizar el atributo 'action' del formulario
-
             });
 
             // Obtener el formulario de eliminación cuando se muestra el modal eliminar
             $("#deleteProductModal").on("show.bs.modal", function (event) {
                 const button = $(event.relatedTarget); // Botón que activó el modal
                 const id = button.data("id"); // Extraer el ID de los datos atributos del botón
-
                 const form = document.getElementById("deleteFormProduct");
                 form.action = `/delete_product/${id}`; // Actualizar el atributo 'action' del formulario
-
             });
 
             // Eliminar el registro al enviar el formulario

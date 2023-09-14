@@ -12,23 +12,23 @@ const { v4: uuidv4 } = require('uuid');
 // });
 
 //Prod 
-// const pool = new Pool({
-//     user: 'flores',
-//     host: 'dpg-cjfaqnqnip6c739eemgg-a.ohio-postgres.render.com',
-//     database: 'flores',
-//     password: '2ozHMesEMGur2Fuuawl4LU2CnITcBCQx',
-//     ssl: true,
-//     port: 5432
-// });
-
 const pool = new Pool({
-    user: 'spina-01',
-    host: '34.176.172.225',
-    database: 'spina',
-    password: '##8YVldfv403$ts)',
-    // ssl: true,
+    user: 'flores',
+    host: 'dpg-cjfaqnqnip6c739eemgg-a.ohio-postgres.render.com',
+    database: 'flores',
+    password: '2ozHMesEMGur2Fuuawl4LU2CnITcBCQx',
+    ssl: true,
     port: 5432
 });
+
+// const pool = new Pool({
+//     user: 'spina-01',
+//     host: '34.176.172.225',
+//     database: 'spina',
+//     password: '##8YVldfv403$ts)',
+//     // ssl: true,
+//     port: 5432
+// });
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
@@ -47,7 +47,7 @@ function formatAmount(number) {
 }
 
 // Obtener registros de la base de datos
-app.get('/', async (req, res) => {
+app.get('/login', async (req, res) => {
     try {
         const client = await pool.connect();
         // let result = await client.query('SELECT * FROM flores.ventas');
@@ -56,7 +56,7 @@ app.get('/', async (req, res) => {
         // const clientsResult = await client.query('SELECT * FROM flores.client');
         const clients = clientsResult.rows;
 
-        const productsResult = await client.query('SELECT * FROM flores.product');
+        const productsResult = await client.query('SELECT * FROM flores.product order by name');
         const products = productsResult.rows;
 
         const salesResult = await client.query('SELECT * FROM flores.sale');
@@ -66,7 +66,41 @@ app.get('/', async (req, res) => {
         data.products = products
         data.sales = sales
         client.release();
-        res.render('index', { data, clients, products, sales }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
+        res.render('login', { data, clients, products, sales }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
+        // res.render('index', {clients}); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        res.status(500).send('Error al obtener los datos');
+    }
+});
+
+// Obtener registros de la base de datos
+app.get('/', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        // let result = await client.query('SELECT * FROM flores.ventas');
+        const data = [];
+        const clientsResult = await client.query('SELECT * FROM flores.client WHERE status_activity = true order by name');
+        // const clientsResult = await client.query('SELECT * FROM flores.client');
+        const clients = clientsResult.rows;
+
+        const productsResult = await client.query('SELECT * FROM flores.product order by name');
+        const products = productsResult.rows;
+
+        const salesResult = await client.query('SELECT * FROM flores.sale');
+        const sales = salesResult.rows;
+
+        const clientsWithSalesResult =  await client.query('SELECT c.id, c.name, c.rut, c.email, c.cell_phone, c.address, c.status_activity, COALESCE(SUM(v.total_amount), 0) AS total_sales, COALESCE(SUM(v.amount_paid), 0) AS total_amount_paid, COALESCE(SUM(v.total_amount), 0) - COALESCE(SUM(v.amount_paid), 0) AS pending_amount FROM flores.client c LEFT JOIN flores.sale v ON c.id = v.id_client WHERE c.status_activity = true GROUP BY c.id, c.name ORDER BY c.name;');
+        // console.log(clients)
+
+        const clientsWithSales = clientsWithSalesResult.rows
+
+        data.clients = clients;
+        data.products = products;
+        data.sales = sales;
+        data.clientsWithSales = clientsWithSales;
+        client.release();
+        res.render('index', { data, clients, products, sales, clientsWithSales }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
         // res.render('index', {clients}); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
     } catch (error) {
         console.error('Error al obtener los datos:', error);
@@ -186,7 +220,6 @@ app.delete('/delete/:id', async (req, res) => {
 
 app.post('/add_sale', async (req, res) => {
     try {
-        console.log(req.body)
         const {
             products,
             sales_date,
@@ -343,7 +376,7 @@ app.post('/edit_sale/:id', async (req, res) => {
 app.get('/client', async (req, res) => {
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM flores.cliente WHERE status_activity = true');
+        const result = await client.query('SELECT * FROM flores.cliente WHERE status_activity = true order by name');
         const clients = result.rows;
         client.release();
         res.render('index', { clients }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
@@ -566,7 +599,53 @@ app.delete('/delete_product/:id', async (req, res) => {
     }
 });
 
+// USERS 
 
+app.get('/users', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM flores.users WHERE status_activity = true');
+        const clients = result.rows;
+        client.release();
+        res.render('index', { clients }); // Pasamos el array 'data' al renderizar la vista 'index.ejs'
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        res.status(500).send('Error al obtener los datos');
+    }
+});
+
+app.post('/add_user', async (req, res) => {
+    try {
+        const {
+            user_name,
+            user_rut,
+            user_email,
+            user_cell_phone,
+            user_address,
+            user_password
+        } = req.body;
+        const client = await pool.connect();
+        await client.query(
+            `INSERT INTO flores.user
+            (id, name, rut, email, cell_phone, address, password) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+            [
+                uuidv4(),
+                user_name,
+                user_rut,
+                user_email,
+                user_cell_phone,
+                user_address,
+                user_password
+            ]
+        );
+        client.release();
+        res.redirect('/');
+    } catch (error) {
+        console.error('Error al agregar el registro de usuario:', error);
+        res.status(500).send('Error al agregar el registro de usuario');
+    }
+})
 
 
 
